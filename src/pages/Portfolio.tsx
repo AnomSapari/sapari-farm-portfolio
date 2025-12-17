@@ -10,33 +10,33 @@ export const Portfolio = () => {
   const portfolios = [
     {
       id: 1,
-      name: 'Portfolio Project',
-      image: '/portfolio.webp',
-      link: 'https://codebayu.com',
+      name: 'Project & Product',
+      image: 'images/kub.jpeg',
+      link: 'https://anom.com',
     },
     {
       id: 2,
-      name: 'Portfolio Project',
-      image: '/portfolio.webp',
-      link: 'https://codebayu.com',
+      name: 'Project & Product',
+      image: 'images/5.jpg',
+      link: 'https://anom.com',
     },
     {
       id: 12,
-      name: 'Portfolio Project',
-      image: '/portfolio.webp',
-      link: 'https://codebayu.com',
+      name: 'Project & Product',
+      image: 'images/ayam.jpg',
+      link: 'https://anom.com',
     },
     {
       id: 13,
-      name: 'Portfolio Project',
-      image: '/portfolio.webp',
-      link: 'https://codebayu.com',
+      name: 'Project & Product',
+      image: 'images/card.jpg',
+      link: 'https://anom.com',
     },
     {
       id: 15,
-      name: 'Portfolio Project',
-      image: '/portfolio.webp',
-      link: 'https://codebayu.com',
+      name: 'Project & Product',
+      image: 'images/petelur.png',
+      link: 'https://anom.com',
     },
   ];
   return (
