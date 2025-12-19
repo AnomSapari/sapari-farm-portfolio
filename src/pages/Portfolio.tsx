@@ -129,41 +129,63 @@ export const Portfolio = () => {
               />
             </div>
 
-            {/* Detail Produk */}
-            <div className="p-8 md:p-12 space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-center text-green-700 dark:text-green-400">
-                {selectedItem.name}
-              </h2>
+                         {/* Detail Produk */}
+              <div className="p-8 md:p-12 space-y-10">
+                <h2 className="text-4xl md:text-5xl font-bold text-center text-green-700 dark:text-green-400">
+                  {selectedItem.name}
+                </h2>
 
-              {selectedItem.price && (
-                <p className="text-3xl md:text-4xl font-bold text-center text-green-600">
-                  Harga: {selectedItem.price}
+                {selectedItem.price && (
+                  <p className="text-3xl md:text-4xl font-bold text-center text-green-600">
+                    Harga: {selectedItem.price}
+                  </p>
+                )}
+
+                {/* Deskripsi */}
+                <p className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300 text-center max-w-3xl mx-auto">
+                  {selectedItem.description}
                 </p>
-              )}
 
-              <p className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300 text-center max-w-3xl mx-auto">
-                {selectedItem.description}
-              </p>
+                {/* Box Kuning Cara Pembayaran - Pasti Muncul & Mencolok */}
+                <div className="bg-yellow-100 dark:bg-yellow-900/70 p-8 md:p-10 rounded-3xl border-4 border-yellow-400 dark:border-yellow-500 text-center space-y-6 shadow-2xl">
+                  <p className="text-2xl md:text-3xl font-bold text-yellow-800 dark:text-yellow-200">
+                    💳 Cara Pembayaran
+                  </p>
+                  <div className="space-y-5 text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    <p>
+                      <span className="text-yellow-700 dark:text-yellow-300">GOPAY:</span> 083891515097 a/n ANOM SAPARI
+                    </p>
+                    <p>
+                      <span className="text-yellow-700 dark:text-yellow-300">Mandiri:</span> 129 0010032031 a/n ANOM SAPARI
+                    </p>
+                    <p>
+                      <span className="text-yellow-700 dark:text-yellow-300">DANA:</span> 083891515097 a/n ANOM SAPARI
+                    </p>
+                  </div>
+                  <p className="text-base md:text-lg italic text-gray-700 dark:text-gray-300 pt-6 border-t-2 border-yellow-300 dark:border-yellow-600">
+                    📤 Kirim bukti transfer ke WhatsApp untuk konfirmasi pesanan secepatnya
+                  </p>
+                </div>
 
-              {/* Tombol WhatsApp & Tutup - Besar dan Jelas */}
-              <div className="flex flex-col md:flex-row justify-center gap-6 pt-8">
-                <a
-                  href={`https://wa.me/6283891515097?text=Halo%20Sapari%20Farm,%20saya%20tertarik%20dengan%20${encodeURIComponent(selectedItem.name)}.%20Info%20harga%20%26%20ketersediaan%20dong!`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full md:w-auto px-12 py-6 bg-green-600 text-white text-2xl md:text-3xl font-bold rounded-2xl hover:bg-green-700 transition shadow-2xl text-center flex items-center justify-center gap-3"
-                >
-                  <span>📱</span> Pesan Sekarang via WhatsApp
-                </a>
+                {/* Tombol WhatsApp & Tutup */}
+                <div className="flex flex-col md:flex-row justify-center gap-6 pt-8">
+                  <a
+                    href={`https://wa.me/6283891515097?text=Halo%20Sapari%20Farm,%20saya%20tertarik%20dengan%20${encodeURIComponent(selectedItem.name)}.%20Info%20harga%20%26%20ketersediaan%20dong!`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full md:w-auto px-12 py-6 bg-green-600 text-white text-2xl md:text-3xl font-bold rounded-2xl hover:bg-green-700 transition shadow-2xl text-center flex items-center justify-center gap-3"
+                  >
+                    <span>📱</span> Pesan Sekarang via WhatsApp
+                  </a>
 
-                <button
-                  onClick={() => setSelectedItem(null)}
-                  className="w-full md:w-auto px-12 py-6 bg-red-600 text-white text-2xl font-bold rounded-2xl hover:bg-red-700 transition shadow-lg"
-                >
-                  Tutup
-                </button>
+                  <button
+                    onClick={() => setSelectedItem(null)}
+                    className="w-full md:w-auto px-12 py-6 bg-red-600 text-white text-2xl font-bold rounded-2xl hover:bg-red-700 transition shadow-lg"
+                  >
+                    Tutup
+                  </button>
+                </div>
               </div>
-            </div>
           </motion.div>
         </motion.div>
       )}
