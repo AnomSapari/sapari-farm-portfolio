@@ -10,6 +10,7 @@ export const Header = () => {
   const navLink: INavLink[] = [
     { name: 'About', path: '/about' },
     { name: 'Skills', path: '/skills' },
+   { name: 'Admin Portfolio', path: '/skill-portfolio' },
     { name: 'Experience', path: '/experience' },
     { name: 'Education', path: '/education' },
     { name: 'Portfolio', path: '/portfolio' },

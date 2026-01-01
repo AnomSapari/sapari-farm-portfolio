@@ -10,6 +10,8 @@ import { Contact } from './pages/Contact';
 import { MediaBar } from './components/MediaBar';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
+import SkillPortfolio from './pages/SkillPortfolio';
+
 
 function App() {
   return (
@@ -24,8 +26,11 @@ function App() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/education" element={<Education />} />
           <Route path="/portfolio" element={<Portfolio />} />
+           <Route path="/skill-portfolio" element={<SkillPortfolio />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
+         
+
         </Routes>
       </section>
       <Footer />
