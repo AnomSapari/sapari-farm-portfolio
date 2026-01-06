@@ -42,7 +42,7 @@ export const About = () => {
       <div className="flex justify-center my-12">
         <div className="relative">
           <img
-            src="/images/profil-saya.jpg"  // Pastikan foto sudah di public/images/
+            src="/images/profile.jpg"  // Pastikan foto sudah di public/images/
             alt="Anom Sapari - Sapari Farm"
             className="w-64 h-64 lg:w-80 lg:h-80 rounded-full object-cover shadow-2xl border-8 border-green-600"
           />
@@ -54,7 +54,7 @@ export const About = () => {
       <div className="max-w-4xl mx-auto space-y-5 text-base lg:text-lg leading-relaxed text-gray-700 dark:text-gray-300">
         <p>
           Website ini merupakan platform yang dikelola oleh web developer
-          profesional sekaligus peternak ayam KUB (Kampung Unggul Balitbangtan)
+          mandiri sekaligus peternak ayam KUB (Kampung Unggul Balitbangtan)
           dan DOC berkualitas. Kami menggabungkan teknologi digital dan
           pengalaman di bidang peternakan untuk memberikan solusi terbaik bagi
           pelaku usaha, peternak, dan masyarakat umum.

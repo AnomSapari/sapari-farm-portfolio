@@ -15,10 +15,10 @@ export const Contact = () => {
     e.preventDefault();
 
     emailjs.sendForm(
-      'YOUR_SERVICE_ID',     // Ganti dengan Service ID Anda
-      'YOUR_TEMPLATE_ID',    // Ganti dengan Template ID Anda
+      'YOUR_SERVICE_ID',     
+      'YOUR_TEMPLATE_ID',    
       e.currentTarget,
-      'YOUR_PUBLIC_KEY'      // Ganti dengan Public Key Anda
+      'YOUR_PUBLIC_KEY'      
     ).then(() => {
       setStatus('Pesan terkirim! Terima kasih, saya akan hubungi segera 🌿');
       e.currentTarget.reset();
@@ -40,7 +40,7 @@ export const Contact = () => {
           Hubungi Sapari Farm
         </h2>
         <p className="text-xl text-gray-600 dark:text-gray-400">
-          Pesan DOC Ayam KUB, ID Card Kulit, atau konsultasi peternakan
+          Pesan DOC Ayam KUB, ID Card Kulit,
         </p>
       </div>
 

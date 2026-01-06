@@ -29,21 +29,35 @@ export const Home = () => {
   </p>
 </div>
 
-        <p className="text-center md:text-start text-xs md:text-base">
-          Code by Day, Farm by Passion
-          Web developer membangun website modern dan fungsional, 
-          sekaligus menekuni peternakan ayam KUB secara profesional dengan pendekatan berkelanjutan.
-        </p>
-        <Link to="./Anomsapari-Frontend-Developer-CV.pdf" target="_blank">
-          <motion.div
-            initial={resume.initial}
-            animate={resume.animated}
-            transition={resume.transition}
-            className="rounded-3xl w-max border px-4 py-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-black hover:border-teal-500"
-          >
-            Download Resume
-          </motion.div>
-        </Link>
+        <p className="text-center md:text-start text-xs md:text-base max-w-xl">
+  Saya adalah seorang Frontend Developer mandiri yang membangun website modern dan fungsional.
+  Di luar dunia teknologi, saya mendokumentasikan perjalanan membangun 
+  <strong> Sapari Farm</strong> — peternakan ayam KUB skala kecil,
+  mulai dari pembuatan kandang, manajemen pakan, hingga evaluasi harian
+  sebagai proses pembelajaran berkelanjutan.
+</p>
+
+       <motion.div
+  initial={resume.initial}
+  animate={resume.animated}
+  transition={resume.transition}
+  className="flex gap-4 flex-wrap justify-center md:justify-start"
+>
+  <Link to="./Anomsapari-Frontend-Developer-CV.pdf" target="_blank">
+    <div className="rounded-3xl border px-4 py-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-black">
+      Download Resume
+    </div>
+  </Link>
+
+  <Link to="/farm">
+    <div className="rounded-3xl border px-4 py-2 border-white text-white hover:bg-white hover:text-black">
+      Sapari Farm Journey
+    </div>
+  </Link>
+</motion.div>
+
+
+
       </motion.div>
       <motion.div
         initial={wrapImg.initial}
@@ -55,7 +69,7 @@ export const Home = () => {
           initial={image.initial}
           animate={image.animated}
           transition={image.transition}
-          src="images/profile.jpg"
+          src="images/KUB.jpeg"
           alt="profile"
           width="100%"
           height="100%"
