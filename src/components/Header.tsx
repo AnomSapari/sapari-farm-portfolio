@@ -10,7 +10,8 @@ export const Header = () => {
   const navLink: INavLink[] = [
     { name: 'About', path: '/about' },
     { name: 'Skills & Expertise', path: '/skills' },
-    { name: 'Admin Portfolio', path: '/skill-portfolio' },
+    { name: 'Journey Ternak', path: '/journey-ternak' },
+    { name: 'Admin Dashboard', path: '/admin-dashboard' },
     { name: 'Experience', path: '/experience' },
     { name: 'Education', path: '/education' },
     { name: 'Portfolio', path: '/portfolio' },
@@ -20,55 +21,56 @@ export const Header = () => {
   const toggleDrawer = () => setOpenDrawer(!openDrawer);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-teal-500/20 shadow-lg"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
-        <Link to="/">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3"
-          >
-            <IconRobot className="w-10 h-10 md:w-12 md:h-12 text-teal-400" />
-            <span className="text-2xl md:text-3xl font-bold text-white">
-              AnomSapari
-            </span>
-          </motion.div>
-        </Link>
-
-        {/* Nav Desktop */}
-        <nav className="hidden lg:flex items-center space-x-10">
-          {navLink.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className="text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 relative group"
+    <>
+      {/* Header Utama */}
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-teal-500/20 shadow-lg"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
+          <Link to="/">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center space-x-3"
             >
-              {item.name}
-              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-          ))}
-        </nav>
+              <IconRobot className="w-10 h-10 md:w-12 md:h-12 text-teal-400" />
+              <span className="text-2xl md:text-3xl font-bold text-white">AnomSapari</span>
+            </motion.div>
+          </Link>
 
-        {/* Hamburger Mobile */}
-        <button
-          onClick={toggleDrawer}
-          className="lg:hidden text-white focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <IconMenu2 className="w-8 h-8" />
-        </button>
-      </div>
+          {/* Menu Desktop (lg ke atas) */}
+          <nav className="hidden lg:flex items-center space-x-10">
+            {navLink.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 relative group"
+              >
+                {item.name}
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
+          </nav>
 
-      {/* Drawer Mobile */}
+          {/* Hamburger Mobile */}
+          <button
+            onClick={toggleDrawer}
+            className="lg:hidden text-white focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            <IconMenu2 className="w-8 h-8" />
+          </button>
+        </div>
+      </motion.header>
+
+      {/* Drawer Mobile (slide dari kanan) */}
       <AnimatePresence>
         {openDrawer && (
           <>
-            {/* Overlay Gelap */}
+            {/* Overlay gelap (klik luar tutup) */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -78,7 +80,7 @@ export const Header = () => {
               onClick={toggleDrawer}
             />
 
-            {/* Drawer dari Kanan */}
+            {/* Drawer */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -92,18 +94,22 @@ export const Header = () => {
                   <IconRobot className="w-10 h-10 text-teal-400" />
                   <span className="text-2xl font-bold text-white">AnomSapari</span>
                 </div>
-                <button onClick={toggleDrawer} className="text-white focus:outline-none">
+                <button
+                  onClick={toggleDrawer}
+                  className="text-white focus:outline-none"
+                  aria-label="Close menu"
+                >
                   <IconX className="w-8 h-8" />
                 </button>
               </div>
 
-              {/* Menu Items */}
+              {/* Daftar Menu */}
               <nav className="flex flex-col p-6 space-y-6">
                 {navLink.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
-                    onClick={toggleDrawer}
+                    onClick={toggleDrawer} // Tutup drawer setelah klik
                     className="text-xl text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300"
                   >
                     {item.name}
@@ -114,6 +120,6 @@ export const Header = () => {
           </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 };
