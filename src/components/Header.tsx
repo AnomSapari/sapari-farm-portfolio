@@ -10,8 +10,7 @@ export const Header = () => {
   const navLink: INavLink[] = [
     { name: 'About', path: '/about' },
     { name: 'Skills & Expertise', path: '/skills' },
-    { name: 'Journey Ternak', path: '/journey-ternak' },
-    { name: 'Admin Dashboard', path: '/admin-dashboard' },
+    { name: 'Admin Portfolio', path: '/skill-portfolio' },
     { name: 'Experience', path: '/experience' },
     { name: 'Education', path: '/education' },
     { name: 'Portfolio', path: '/portfolio' },
@@ -22,7 +21,7 @@ export const Header = () => {
 
   return (
     <>
-      {/* Header Utama */}
+      {/* Header Utama (fixed & blur) */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
