@@ -12,6 +12,10 @@ import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
 import SkillPortfolio from './pages/SkillPortfolio';
 import Products from './components/Products';
+import EdukasiSkill from './pages/EdukasiSkill';
+import EdukasiPeternakan from './pages/EdukasiPeternakan';
+
+
 // ✅ Halaman Farm Dashboard
 import FarmDashboard from './pages/FarmDashboard';
 
@@ -34,7 +38,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/products" element={<Products />} />
           <Route path="/edukasi-skill" element={<EdukasiSkill />} />
-<Route path="/edukasi-peternakan" element={<EdukasiPeternakan />} />
+          <Route path="/edukasi-peternakan" element={<EdukasiPeternakan />} />
 
           {/* Farm Routes */}
           <Route path="/farm/*" element={<FarmDashboard />} />
