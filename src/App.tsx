@@ -11,12 +11,12 @@ import { MediaBar } from './components/MediaBar';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
 import SkillPortfolio from './pages/SkillPortfolio';
-import Products from './components/Products';
+import Products from './pages/Products';  // ← Pakai dari pages (hapus import dari components kalau ada)
 import EdukasiSkill from './pages/EdukasiSkill';
 import EdukasiPeternakan from './pages/EdukasiPeternakan';
+import PerjalananPeternakan from './pages/PerjalananPeternakan'; // Asumsi nama file ini
 
-
-// ✅ Halaman Farm Dashboard
+// Farm Dashboard
 import FarmDashboard from './pages/FarmDashboard';
 
 function App() {
@@ -36,14 +36,19 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skill-portfolio" element={<SkillPortfolio />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/products" element={<Products />} />
+
+          {/* Edukasi */}
           <Route path="/edukasi-skill" element={<EdukasiSkill />} />
           <Route path="/edukasi-peternakan" element={<EdukasiPeternakan />} />
+          <Route path="/perjalanan-peternakan" element={<PerjalananPeternakan />} />
 
-          {/* Farm Routes */}
+          {/* Produk Seller */}
+          <Route path="/products" element={<Products />} />
+
+          {/* Farm Dashboard (wildcard untuk sub-halaman) */}
           <Route path="/farm/*" element={<FarmDashboard />} />
 
-          {/* Not Found */}
+          {/* Not Found (harus di akhir) */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </section>
