@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 const sectionVariants = {
@@ -10,21 +10,40 @@ const sectionVariants = {
 
 export const Contact = () => {
   const [status, setStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null); // Tambah ref untuk form
 
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setStatus('');
 
-    emailjs.sendForm(
-      'YOUR_SERVICE_ID',     
-      'YOUR_TEMPLATE_ID',    
-      e.currentTarget,
-      'YOUR_PUBLIC_KEY'      
-    ).then(() => {
-      setStatus('Pesan terkirim! Terima kasih, saya akan hubungi segera 🌿');
-      e.currentTarget.reset();
-    }, (error) => {
-      setStatus('Gagal kirim: ' + error.text);
-    });
+    if (!formRef.current) {
+      setStatus('Form tidak ditemukan');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      if (response.status === 200) {
+        setStatus('Pesan terkirim! Terima kasih, saya akan hubungi segera 🌿');
+        formRef.current.reset(); // Reset pakai ref
+      } else {
+        throw new Error('Respons tidak sukses');
+      }
+    } catch (error: any) {
+      setStatus('Terjadi kesalahan saat mengirim. Coba lagi atau cek inbox Anda.');
+      console.error('EmailJS Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -40,20 +59,32 @@ export const Contact = () => {
           Hubungi Sapari Farm
         </h2>
         <p className="text-xl text-gray-600 dark:text-gray-400">
-          Pesan DOC Ayam KUB, ID Card Kulit,
+          Pesan DOC Ayam KUB, ID Card Kulit, atau konsultasi peternakan
         </p>
       </div>
 
       <div className="max-w-2xl mx-auto px-6">
-        <form onSubmit={sendEmail} className="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl">
-          <input type="text" name="name" placeholder="Nama Lengkap" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none" />
-          <input type="email" name="email" placeholder="Email" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none" />
-          <input type="tel" name="phone" placeholder="Nomor HP / WhatsApp" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none" />
-          <textarea name="message" rows={6} placeholder="Pesan / Pertanyaan (misal: Mau pesan 100 ekor DOC KUB)" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none"></textarea>
-          <button type="submit" className="w-full py-6 bg-green-600 text-white text-2xl font-bold rounded-2xl hover:bg-green-700 transition shadow-lg">
-            Kirim Pesan 📩
+        <form ref={formRef} onSubmit={sendEmail} className="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl">
+          <input type="text" name="name" placeholder="Nama Lengkap" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" />
+          <input type="email" name="email" placeholder="Email" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" />
+          <input type="tel" name="phone" placeholder="Nomor HP / WhatsApp" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" />
+          <textarea name="message" rows={6} placeholder="Pesan / Pertanyaan (misal: Mau pesan 100 ekor DOC KUB)" required className="w-full px-6 py-4 rounded-xl border border-green-300 focus:border-green-600 outline-none bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100"></textarea>
+
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className={`w-full py-6 text-white text-2xl font-bold rounded-2xl shadow-lg transition ${
+              isLoading ? 'bg-green-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+            }`}
+          >
+            {isLoading ? 'Mengirim...' : 'Kirim Pesan 📩'}
           </button>
-          {status && <p className="text-center text-xl font-semibold text-green-600">{status}</p>}
+
+          {status && (
+            <p className={`text-center text-xl font-semibold ${status.includes('kesalahan') ? 'text-red-600' : 'text-green-600'}`}>
+              {status}
+            </p>
+          )}
         </form>
       </div>
     </motion.section>
