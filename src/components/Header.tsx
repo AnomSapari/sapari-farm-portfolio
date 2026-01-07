@@ -10,10 +10,11 @@ export const Header = () => {
 
   const navLink: INavLink[] = [
     { name: 'About', path: '/about' },
-    { name: 'Experience', path: '/experience' },
-    { name: 'Education', path: '/education' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Contact', path: '/contact' },
+  { name: 'Skills', path: '/skills' },
+  { name: 'Resume', path: '/resume' },  // Baru: Halaman upload/view CV
+  { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Produk Seller', path: '/products' },  // Baru: Katalog seller
+  { name: 'Contact', path: '/contact' },
   ];
 
   const toggleDrawer = () => setOpenDrawer(!openDrawer);
@@ -67,6 +68,7 @@ export const Header = () => {
                 >
                   <Link to="/edukasi-skill" className="block hover:text-teal-400">Edukasi Skill</Link>
                   <Link to="/edukasi-peternakan" className="block hover:text-teal-400">Edukasi Peternakan</Link>
+                  <Link to="/perjalanan-peternakan" className="block hover:text-teal-400">Perjalanan Peternakan</Link>
                 </motion.div>
               )}
             </div>
