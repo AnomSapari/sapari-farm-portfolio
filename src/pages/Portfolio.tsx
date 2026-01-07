@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { IconBrandCodepen } from '@tabler/icons-react';
+import { Link } from 'react-router-dom'; // Tambah import ini
 
 // Type untuk item produk
 interface PortfolioItem {
@@ -104,6 +105,19 @@ export const Portfolio = () => {
         ))}
       </div>
 
+      {/* Tombol ke Halaman Produk Seller (Tanpa Tambah Menu Navbar) */}
+      <div className="text-center mt-12">
+        <Link
+          to="/products"  // Arahkan ke halaman produk seller yang sudah Anda buat
+          className="inline-block px-10 py-5 bg-green-600 hover:bg-green-700 text-white text-xl md:text-2xl font-bold rounded-2xl shadow-xl transition transform hover:scale-105"
+        >
+          🛒 Lihat Semua Produk Seller → Pakan, Bibit KUB & DOC
+        </Link>
+        <p className="mt-4 text-gray-600 dark:text-gray-400">
+          Koleksi lengkap produk peternakan Sapari Farm siap dikirim ke seluruh Indonesia
+        </p>
+      </div>
+
       {/* Modal Detail */}
       {selectedItem && (
         <motion.div
@@ -179,9 +193,9 @@ export const Portfolio = () => {
                   <span>📱</span> Pesan Sekarang via WhatsApp
                 </a>
 
-                {/* Tombol Bayar Otomatis - Ganti link dengan Xendit/Midtrans Anda nanti */}
+                {/* Tombol Bayar Otomatis */}
                 <a
-                  href="https://checkout.xendit.co/web/LINK_PAYMENT_ANDA_DI_SINI"  // Ganti dengan link payment Anda setelah daftar Xendit
+                  href="https://checkout.xendit.co/web/LINK_PAYMENT_ANDA_DI_SINI"  // Ganti dengan link Xendit/Midtrans Anda
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full md:w-auto px-12 py-6 bg-indigo-600 text-white text-2xl md:text-3xl font-bold rounded-2xl hover:bg-indigo-700 transition shadow-2xl text-center flex items-center justify-center gap-3"
