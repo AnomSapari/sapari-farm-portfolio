@@ -11,7 +11,7 @@ import { MediaBar } from './components/MediaBar';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
 import SkillPortfolio from './pages/SkillPortfolio';
-
+import Products from './components/Products';
 // ✅ Halaman Farm Dashboard
 import FarmDashboard from './pages/FarmDashboard';
 
@@ -32,6 +32,9 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skill-portfolio" element={<SkillPortfolio />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/edukasi-skill" element={<EdukasiSkill />} />
+<Route path="/edukasi-peternakan" element={<EdukasiPeternakan />} />
 
           {/* Farm Routes */}
           <Route path="/farm/*" element={<FarmDashboard />} />
