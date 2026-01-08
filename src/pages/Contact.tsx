@@ -1,6 +1,9 @@
+import { createWaLink } from '../utils/whatsapp';
+
+
 const Contact = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+   <div className="max-w-4xl mx-auto px-4 pt-24 md:pt-28 pb-10">
       <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
         Kontak & Informasi Sapari Farm
       </h1>
@@ -31,18 +34,25 @@ const Contact = () => {
             Hubungi Kami
           </h2>
           <ul className="space-y-3 text-gray-300">
-            <li>📞 WhatsApp: 08xxxxxxxxxx</li>
+            <li>📞 WhatsApp: 083891515097</li>
             <li>⏰ Jam Operasional: 08.00 – 20.00 WIB</li>
             <li>📩 Konsultasi awal GRATIS</li>
           </ul>
 
           <a
-            href="https://wa.me/6283891515097"
-            target="_blank"
-            className="inline-block mt-6 rounded-full bg-teal-500 px-6 py-3 text-black font-semibold"
-          >
-            Chat via WhatsApp
-          </a>
+  href={createWaLink(`
+Halo Sapari Farm 👋
+Saya tertarik dengan produk & layanan Sapari Farm.
+Mohon info harga pakan dan cara pemesanannya 🙏
+  `)}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block mt-6 rounded-full bg-teal-500 px-6 py-3 
+             text-black font-semibold hover:bg-teal-400 transition"
+>
+  Chat via WhatsApp
+</a>
+
         </div>
       </div>
 

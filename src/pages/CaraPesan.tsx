@@ -1,76 +1,93 @@
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { createWaLink } from '../utils/whatsapp';
 
-export const CaraPesan = () => {
+const CaraPesan = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-        Cara Pesan Pakan Ayam di Sapari Farm
-      </h1>
+    <div className="max-w-4xl mx-auto px-4 pt-24 md:pt-28 pb-16 text-white">
+      {/* HEADER */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-10"
+      >
+        <h1 className="text-3xl md:text-4xl font-bold text-teal-400 mb-4">
+          Cara Pesan Pakan Ayam di Sapari Farm
+        </h1>
+        <p className="text-gray-400 text-lg">
+          Proses mudah, transparan, dan bisa konsultasi GRATIS sebelum pesan.
+        </p>
+      </motion.div>
 
-      <p className="text-gray-400 mb-8">
-        Proses pemesanan dibuat sederhana agar peternak bisa langsung
-        mendapatkan pakan sesuai kebutuhan kandangnya.
-      </p>
-
-      {/* Langkah */}
+      {/* STEP */}
       <div className="space-y-6">
-        <div className="bg-gray-900 p-5 rounded-xl">
-          <h2 className="font-semibold text-lg text-teal-400">
-            1️⃣ Hitung Kebutuhan Pakan
-          </h2>
-          <p className="text-gray-300 mt-2">
-            Gunakan kalkulator pakan untuk mengetahui estimasi kebutuhan
-            harian dan bulanan ayam Anda.
-          </p>
-        </div>
-
-        <div className="bg-gray-900 p-5 rounded-xl">
-          <h2 className="font-semibold text-lg text-teal-400">
-            2️⃣ Pilih Jenis Pakan
-          </h2>
-          <p className="text-gray-300 mt-2">
-            Tentukan jenis pakan sesuai umur ayam: starter, grower, atau
-            layer.
-          </p>
-        </div>
-
-        <div className="bg-gray-900 p-5 rounded-xl">
-          <h2 className="font-semibold text-lg text-teal-400">
-            3️⃣ Hubungi Kami via WhatsApp
-          </h2>
-          <p className="text-gray-300 mt-2">
-            Klik tombol WhatsApp, pesan akan terisi otomatis berdasarkan
-            hasil perhitungan Anda.
-          </p>
-        </div>
-
-        <div className="bg-gray-900 p-5 rounded-xl">
-          <h2 className="font-semibold text-lg text-teal-400">
-            4️⃣ Konfirmasi & Pengiriman
-          </h2>
-          <p className="text-gray-300 mt-2">
-            Tim kami akan mengonfirmasi stok, harga, dan jadwal pengiriman.
-          </p>
-        </div>
+        {[
+          {
+            title: '1️⃣ Hitung Kebutuhan Pakan',
+            desc: 'Gunakan kalkulator pakan ayam untuk mengetahui estimasi kebutuhan dan biaya.',
+          },
+          {
+            title: '2️⃣ Kirim Hasil ke WhatsApp',
+            desc: 'Klik tombol “Pesan via WhatsApp” untuk mengirim hasil perhitungan otomatis.',
+          },
+          {
+            title: '3️⃣ Konsultasi & Konfirmasi',
+            desc: 'Kami bantu cek kebutuhan, stok, dan rekomendasi terbaik.',
+          },
+          {
+            title: '4️⃣ Pengiriman',
+            desc: 'Pengiriman area Jawa Tengah & sekitarnya.',
+          },
+        ].map((step, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="bg-gray-900 border border-white/10 rounded-xl p-6"
+          >
+            <h2 className="text-xl font-semibold text-teal-300 mb-2">
+              {step.title}
+            </h2>
+            <p className="text-gray-300">{step.desc}</p>
+          </motion.div>
+        ))}
       </div>
 
       {/* CTA */}
-      <div className="mt-10 flex flex-wrap gap-4">
-        <Link
-          to="/farm"
-          className="rounded-full border border-teal-500 px-6 py-3 text-teal-400 hover:bg-teal-500 hover:text-black"
-        >
-          Hitung Pakan Sekarang
-        </Link>
+      <div className="mt-12 bg-gray-900 border border-green-500/30 rounded-2xl p-8 text-center">
+        <h2 className="text-2xl font-bold mb-4">
+          Siap Pesan atau Konsultasi?
+        </h2>
+        <p className="text-gray-400 mb-6">
+          Klik tombol di bawah untuk langsung chat dengan kami via WhatsApp.
+        </p>
 
         <a
-          href="https://wa.me/62XXXXXXXXXX"
+          href={createWaLink(
+            'Halo Sapari Farm 👋, saya ingin konsultasi dan pesan pakan ayam.'
+          )}
           target="_blank"
-          className="rounded-full bg-teal-500 px-6 py-3 text-black font-semibold"
+          rel="noopener noreferrer"
+          className="inline-block w-full md:w-auto bg-green-500 hover:bg-green-600 text-black font-bold px-8 py-4 rounded-xl text-lg transition"
         >
-          Pesan via WhatsApp
+          💬 Chat via WhatsApp Sekarang
         </a>
+      </div>
+
+      {/* TRUST */}
+      <div className="mt-12 bg-gray-900 rounded-xl p-6">
+        <h3 className="text-xl font-semibold text-teal-400 mb-4">
+          Kenapa Pesan di Sapari Farm?
+        </h3>
+        <ul className="list-disc ml-5 space-y-2 text-gray-300">
+          <li>Berbasis pengalaman peternakan nyata</li>
+          <li>Hitungan pakan transparan</li>
+          <li>Cocok untuk peternak pemula & UMKM</li>
+          <li>Bukan sekadar jualan, tapi pendampingan</li>
+        </ul>
       </div>
     </div>
   );
 };
+
+export default CaraPesan;

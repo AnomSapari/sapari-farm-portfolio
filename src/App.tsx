@@ -16,7 +16,7 @@ import EdukasiSkill from './pages/EdukasiSkill';
 import EdukasiPeternakan from './pages/EdukasiPeternakan';
 import PerjalananPeternakan from './pages/PerjalananPeternakan'; // Asumsi nama file ini
 import Resume from './pages/Resume';
-import { CaraPesan } from './pages/CaraPesan';
+import CaraPesan from './pages/CaraPesan';
 import KalkulatorPakan from './pages/KalkulatorPakan';
 
 

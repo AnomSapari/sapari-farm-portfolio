@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { motion } from 'framer-motion';
-import { openWhatsApp } from '../utils/whatsapp'; // ⬅️ BARU
+import { createWaLink } from '../utils/whatsapp';
+
+
+
 
 const getPakanPerEkor = (umur: number): number => {
   if (umur <= 4) return 30;
@@ -68,10 +71,11 @@ const FarmKalkulatorPakan: React.FC = () => {
   };
 
   // ⬇️ BARU — PESAN WA OTOMATIS
-  const kirimKeWA = () => {
-    if (!hasil) return;
 
-    openWhatsApp(`
+  const kirimKeWA = () => {
+  if (!hasil) return;
+
+  const message = `
 Halo Sapari Farm 👋
 Saya ingin pesan pakan ayam KUB.
 
@@ -79,11 +83,16 @@ Saya ingin pesan pakan ayam KUB.
 📆 Umur: ${umur} minggu
 🌽 Total Pakan: ${hasil.totalPakanKg} kg / hari
 💰 Estimasi Bulanan: Rp ${hasil.biayaBulanan.toLocaleString('id-ID')}
-    `.trim());
-  };
+  `.trim();
+
+  const waLink = createWaLink(message);
+  window.open(waLink, '_blank');
+};
+
 
   return (
-    <div className="p-6 md:p-12 bg-gray-900 text-white min-h-screen">
+   <div className="pt-24 md:pt-28 p-6 md:p-12 bg-gray-900 text-white min-h-screen">
+
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 text-teal-400">
         Kalkulator Pakan Ayam KUB
       </h1>

@@ -1,87 +1,114 @@
-import { IconMenu2, IconRobot, IconX, IconChevronDown } from '@tabler/icons-react';
+import {
+  IconMenu2,
+  IconX,
+  IconChevronDown,
+  IconLeaf
+} from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { INavLink } from '../types/common';
+import { NavLink, Link } from 'react-router-dom';
 
 export const Header = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(false); // Tambah state untuk dropdown
+  const [openDropdown, setOpenDropdown] = useState(false);
 
-  const navLink: INavLink[] = [
-    { name: 'About', path: '/about' },
-    { name: 'Resume', path: '/resume' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Skills', path: '/skills' },
-    { name: 'Produk Seller', path: '/products' },  // Baru: Katalog seller
-    { name: 'Contact', path: '/contact' },
-  ];
+const navLinks = [
+  { name: 'Home', path: '/' },
+  { name: 'Kalkulator Pakan', path: '/kalkulator-pakan' },
+  { name: 'Produk Pakan', path: '/products' },
+  { name: 'Cara Pesan', path: '/cara-pesan' },
+  { name: 'Kontak', path: '/contact' },
+] as { name: string; path: string }[];
 
-  const toggleDrawer = () => setOpenDrawer(!openDrawer);
-  const toggleDropdown = () => setOpenDropdown(!openDropdown);
 
   return (
     <>
-      {/* Header Utama */}
+      {/* HEADER */}
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-teal-500/20 shadow-lg"
+        transition={{ duration: 0.4 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-emerald-500/20"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
-          <Link to="/">
-            <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-3">
-              <IconRobot className="w-10 h-10 md:w-12 md:h-12 text-teal-400" />
-              <span className="text-2xl md:text-3xl font-bold text-white">AnomSapari</span>
-            </motion.div>
+        <div className="max-w-7xl mx-auto h-16 md:h-20 px-4 flex items-center justify-between">
+          {/* LOGO */}
+          <Link to="/" className="flex items-center gap-3">
+            <IconLeaf className="w-9 h-9 text-emerald-400" />
+            <span className="text-2xl md:text-3xl font-bold text-white">
+              Sapari Farm
+            </span>
           </Link>
 
-          {/* Menu Desktop */}
-          <nav className="hidden lg:flex items-center space-x-10">
-            {navLink.map((item) => (
-              <Link
+          {/* DESKTOP NAV */}
+          <nav
+            aria-label="Main Navigation"
+            className="hidden lg:flex items-center gap-8"
+          >
+            {navLinks.map((item) => (
+              <NavLink
                 key={item.path}
                 to={item.path}
-                className="text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 relative group"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-emerald-400 font-semibold'
+                    : 'text-gray-300 hover:text-emerald-400 transition'
+                }
               >
                 {item.name}
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
+              </NavLink>
             ))}
 
-            {/* Dropdown Edukasi */}
+            {/* DROPDOWN EDUKASI */}
             <div className="relative">
               <button
-                onClick={toggleDropdown}
-                className="text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 flex items-center gap-1"
+                onClick={() => setOpenDropdown(!openDropdown)}
+                aria-haspopup="true"
+                aria-expanded={openDropdown}
+                className="flex items-center gap-1 text-gray-300 hover:text-emerald-400"
               >
                 Edukasi
-                <IconChevronDown className="w-5 h-5" />
+                <IconChevronDown className="w-4 h-4" />
               </button>
-              {openDropdown && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full left-0 bg-gray-900 border border-teal-500/20 rounded-xl shadow-2xl p-4 space-y-3"
-                >
-                  <Link to="/edukasi-skill" className="block hover:text-teal-400">Edukasi Skill</Link>
-                  <Link to="/edukasi-peternakan" className="block hover:text-teal-400">Edukasi Peternakan</Link>
-                  <Link to="/perjalanan-peternakan" className="block hover:text-teal-400">Perjalanan Peternakan</Link>
-                </motion.div>
-              )}
+
+              <AnimatePresence>
+                {openDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full mt-3 w-56 rounded-xl bg-gray-900 border border-emerald-500/20 shadow-xl p-4 space-y-3"
+                  >
+                    <NavLink
+                      to="/edukasi-peternakan"
+                      onClick={() => setOpenDropdown(false)}
+                      className="block hover:text-emerald-400"
+                    >
+                      Edukasi Peternakan
+                    </NavLink>
+                    <NavLink
+                      to="/edukasi-skill"
+                      onClick={() => setOpenDropdown(false)}
+                      className="block hover:text-emerald-400"
+                    >
+                      Edukasi Skill
+                    </NavLink>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </nav>
 
-          {/* Hamburger Mobile */}
-          <button onClick={toggleDrawer} className="lg:hidden text-white" aria-label="Toggle menu">
+          {/* MOBILE BUTTON */}
+          <button
+            onClick={() => setOpenDrawer(true)}
+            className="lg:hidden text-white"
+          >
             <IconMenu2 className="w-8 h-8" />
           </button>
         </div>
       </motion.header>
 
-      {/* Drawer Mobile */}
+      {/* MOBILE DRAWER */}
       <AnimatePresence>
         {openDrawer && (
           <>
@@ -89,42 +116,53 @@ export const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 z-40 lg:hidden"
-              onClick={toggleDrawer}
+              onClick={() => setOpenDrawer(false)}
+              className="fixed inset-0 bg-black/60 z-40"
             />
 
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed top-0 right-0 h-full w-80 bg-gray-900 border-l border-teal-500/20 shadow-2xl z-50 lg:hidden"
+              className="fixed top-0 right-0 w-80 h-full bg-gray-900 z-50 p-6"
             >
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <div className="flex items-center space-x-3">
-                  <IconRobot className="w-10 h-10 text-teal-400" />
-                  <span className="text-2xl font-bold text-white">AnomSapari</span>
-                </div>
-                <button onClick={toggleDrawer}>
-                  <IconX className="w-8 h-8 text-white" />
+              <div className="flex justify-between items-center mb-8">
+                <span className="text-xl font-bold text-white">
+                  Sapari Farm
+                </span>
+                <button onClick={() => setOpenDrawer(false)}>
+                  <IconX className="w-7 h-7 text-white" />
                 </button>
               </div>
 
-              <nav className="flex flex-col p-6 space-y-6">
-                {navLink.map((item) => (
-                  <Link key={item.path} to={item.path} onClick={toggleDrawer} className="text-xl text-gray-300 hover:text-teal-400">
+              <nav className="flex flex-col gap-6 text-lg">
+                {navLinks.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setOpenDrawer(false)}
+                    className="text-gray-300 hover:text-emerald-400"
+                  >
                     {item.name}
-                  </Link>
+                  </NavLink>
                 ))}
-                {/* Edukasi in Mobile Drawer */}
-                <div className="space-y-4">
-                  <p className="text-xl text-gray-300 font-bold">Edukasi</p>
-                  <Link to="/edukasi-skill" onClick={toggleDrawer} className="block text-xl text-gray-300 hover:text-teal-400">
-                    Edukasi Skill
-                  </Link>
-                  <Link to="/edukasi-peternakan" onClick={toggleDrawer} className="block text-xl text-gray-300 hover:text-teal-400">
+
+                <div className="pt-4 border-t border-white/10">
+                  <p className="mb-3 font-semibold text-gray-400">Edukasi</p>
+                  <NavLink
+                    to="/edukasi-peternakan"
+                    onClick={() => setOpenDrawer(false)}
+                    className="block mb-2 hover:text-emerald-400"
+                  >
                     Edukasi Peternakan
-                  </Link>
+                  </NavLink>
+                  <NavLink
+                    to="/edukasi-skill"
+                    onClick={() => setOpenDrawer(false)}
+                    className="block hover:text-emerald-400"
+                  >
+                    Edukasi Skill
+                  </NavLink>
                 </div>
               </nav>
             </motion.div>

@@ -1,6 +1,6 @@
-export const WHATSAPP_NUMBER = '6283891515097'; // ganti nomor kamu
+export const createWaLink = (message: string) => {
+  const phone = '6283891515097'; // nomor WA kamu
+  const encodedMessage = encodeURIComponent(message.trim());
 
-export const openWhatsApp = (message: string) => {
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
+  return `https://wa.me/${phone}?text=${encodedMessage}`;
 };
