@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 // Import tab (pastikan path sesuai folder Anda)
 import FarmPakan from './FarmPakan';
-import FarmKalkulatorPakan from './FarmKalkulatorPakan';
+import FarmKalkulatorPakan from '../components/FarmKalkulatorPakan';
 import FarmCatatan from './FarmCatatan';
 import FarmPerjalanan from './FarmPerjalanan';
 

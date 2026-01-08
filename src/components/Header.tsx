@@ -10,11 +10,11 @@ export const Header = () => {
 
   const navLink: INavLink[] = [
     { name: 'About', path: '/about' },
-  { name: 'Skills', path: '/skills' },
-  { name: 'Resume', path: '/resume' },  // Baru: Halaman upload/view CV
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Produk Seller', path: '/products' },  // Baru: Katalog seller
-  { name: 'Contact', path: '/contact' },
+    { name: 'Resume', path: '/resume' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Skills', path: '/skills' },
+    { name: 'Produk Seller', path: '/products' },  // Baru: Katalog seller
+    { name: 'Contact', path: '/contact' },
   ];
 
   const toggleDrawer = () => setOpenDrawer(!openDrawer);

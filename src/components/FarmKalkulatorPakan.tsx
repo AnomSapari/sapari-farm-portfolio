@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { motion } from 'framer-motion';
+import { openWhatsApp } from '../utils/whatsapp'; // ⬅️ BARU
 
 const getPakanPerEkor = (umur: number): number => {
   if (umur <= 4) return 30;
@@ -11,12 +12,10 @@ const getPakanPerEkor = (umur: number): number => {
 };
 
 const FarmKalkulatorPakan: React.FC = () => {
-  // State Input
-  const [jumlahAyam, setJumlahAyam] = useState<number>(15);
-  const [umur, setUmur] = useState<number>(12);
-  const [hargaPakan, setHargaPakan] = useState<number>(8000);
+  const [jumlahAyam, setJumlahAyam] = useState(15);
+  const [umur, setUmur] = useState(12);
+  const [hargaPakan, setHargaPakan] = useState(8000);
 
-  // State Hasil
   const [hasil, setHasil] = useState<{
     pakanPerEkor: number;
     totalPakanKg: number;
@@ -26,8 +25,7 @@ const FarmKalkulatorPakan: React.FC = () => {
 
   const hitungPakan = () => {
     const pakanPerEkor = getPakanPerEkor(umur);
-    const totalPakanGram = jumlahAyam * pakanPerEkor;
-    const totalPakanKg = totalPakanGram / 1000;
+    const totalPakanKg = (jumlahAyam * pakanPerEkor) / 1000;
     const biayaHarian = totalPakanKg * hargaPakan;
     const biayaBulanan = biayaHarian * 30;
 
@@ -40,16 +38,12 @@ const FarmKalkulatorPakan: React.FC = () => {
 
     setHasil(newHasil);
 
-    // Simpan ke localStorage
     const logs = JSON.parse(localStorage.getItem('farmLogs') || '[]');
     logs.push({
       tanggal: new Date().toLocaleDateString('id-ID'),
       jumlahAyam,
       umur,
-      pakanPerEkor,
-      totalPakanKg: newHasil.totalPakanKg,
-      biayaHarian: newHasil.biayaHarian,
-      biayaBulanan: newHasil.biayaBulanan,
+      ...newHasil,
     });
     localStorage.setItem('farmLogs', JSON.stringify(logs));
   };
@@ -70,8 +64,22 @@ const FarmKalkulatorPakan: React.FC = () => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Kalkulator Pakan');
-
     XLSX.writeFile(workbook, `kalkulator-pakan-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
+  // ⬇️ BARU — PESAN WA OTOMATIS
+  const kirimKeWA = () => {
+    if (!hasil) return;
+
+    openWhatsApp(`
+Halo Sapari Farm 👋
+Saya ingin pesan pakan ayam KUB.
+
+🐔 Jumlah Ayam: ${jumlahAyam}
+📆 Umur: ${umur} minggu
+🌽 Total Pakan: ${hasil.totalPakanKg} kg / hari
+💰 Estimasi Bulanan: Rp ${hasil.biayaBulanan.toLocaleString('id-ID')}
+    `.trim());
   };
 
   return (
@@ -85,10 +93,10 @@ const FarmKalkulatorPakan: React.FC = () => {
           <label className="block text-lg mb-2">Jumlah Ayam</label>
           <input
             type="number"
+            min={1}
             value={jumlahAyam}
             onChange={(e) => setJumlahAyam(Number(e.target.value))}
-            min="1"
-            className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-teal-500 outline-none"
+            className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600"
           />
         </div>
 
@@ -96,10 +104,10 @@ const FarmKalkulatorPakan: React.FC = () => {
           <label className="block text-lg mb-2">Umur Ayam (minggu)</label>
           <input
             type="number"
+            min={1}
             value={umur}
             onChange={(e) => setUmur(Number(e.target.value))}
-            min="1"
-            className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-teal-500 outline-none"
+            className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600"
           />
         </div>
 
@@ -107,16 +115,16 @@ const FarmKalkulatorPakan: React.FC = () => {
           <label className="block text-lg mb-2">Harga Pakan per kg (Rp)</label>
           <input
             type="number"
+            min={1000}
             value={hargaPakan}
             onChange={(e) => setHargaPakan(Number(e.target.value))}
-            min="1000"
-            className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-teal-500 outline-none"
+            className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600"
           />
         </div>
 
         <button
           onClick={hitungPakan}
-          className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-white text-xl font-bold rounded-xl transition"
+          className="w-full py-4 bg-teal-600 hover:bg-teal-700 rounded-xl text-xl font-bold"
         >
           Hitung & Simpan
         </button>
@@ -126,29 +134,38 @@ const FarmKalkulatorPakan: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl mx-auto mt-12 bg-gray-800 p-6 md:p-10 rounded-2xl shadow-2xl space-y-6"
+          className="max-w-2xl mx-auto mt-12 bg-gray-800 p-6 md:p-10 rounded-2xl space-y-6"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-teal-400">
+          <h2 className="text-2xl font-bold text-center text-teal-400">
             Hasil Perhitungan
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
+          <div className="grid sm:grid-cols-2 gap-4 text-lg">
             <div>
-              <p><strong>Pakan per Ekor:</strong> {hasil.pakanPerEkor} gram</p>
-              <p><strong>Total Pakan Harian:</strong> {hasil.totalPakanKg} kg</p>
+              <p>🐔 {hasil.pakanPerEkor} g / ekor</p>
+              <p>🌽 {hasil.totalPakanKg} kg / hari</p>
             </div>
             <div>
-              <p><strong>Biaya Harian:</strong> Rp {hasil.biayaHarian.toLocaleString('id-ID')}</p>
-              <p><strong>Biaya Bulanan (30 hari):</strong> Rp {hasil.biayaBulanan.toLocaleString('id-ID')}</p>
+              <p>💰 Rp {hasil.biayaHarian.toLocaleString('id-ID')} / hari</p>
+              <p>📆 Rp {hasil.biayaBulanan.toLocaleString('id-ID')} / bulan</p>
             </div>
           </div>
 
-          <button
-            onClick={downloadExcel}
-            className="w-full py-4 bg-green-600 hover:bg-green-700 text-white text-xl font-bold rounded-xl transition mt-6"
-          >
-            Download ke Excel
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={kirimKeWA}
+              className="w-full py-4 bg-green-600 hover:bg-green-700 rounded-xl text-xl font-bold"
+            >
+              💬 Pesan via WhatsApp
+            </button>
+
+            <button
+              onClick={downloadExcel}
+              className="w-full py-3 border border-green-500 rounded-xl"
+            >
+              Download Excel
+            </button>
+          </div>
         </motion.div>
       )}
     </div>

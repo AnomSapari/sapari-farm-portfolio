@@ -6,7 +6,7 @@ import { Skills } from './pages/Skills';
 import { Experience } from './pages/Experience';
 import { Education } from './pages/Education';
 import { Portfolio } from './pages/Portfolio';
-import { Contact } from './pages/Contact';
+import  Contact from './pages/Contact';
 import { MediaBar } from './components/MediaBar';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
@@ -15,6 +15,10 @@ import Products from './pages/Products';  // ← Pakai dari pages (hapus import 
 import EdukasiSkill from './pages/EdukasiSkill';
 import EdukasiPeternakan from './pages/EdukasiPeternakan';
 import PerjalananPeternakan from './pages/PerjalananPeternakan'; // Asumsi nama file ini
+import Resume from './pages/Resume';
+import { CaraPesan } from './pages/CaraPesan';
+import KalkulatorPakan from './pages/KalkulatorPakan';
+
 
 // Farm Dashboard
 import FarmDashboard from './pages/FarmDashboard';
@@ -25,7 +29,8 @@ function App() {
       <Header />
       <MediaBar />
 
-      <section className="px-3 md:px-10 lg:px-20 pb-12 min-h-screen">
+     <section className="px-3 md:px-10 lg:px-20 pb-12 pt-24 min-h-screen">
+
         <Routes>
           {/* Main Pages */}
           <Route path="/" element={<Home />} />
@@ -47,6 +52,12 @@ function App() {
 
           {/* Farm Dashboard (wildcard untuk sub-halaman) */}
           <Route path="/farm/*" element={<FarmDashboard />} />
+          <Route path="/resume" element={<Resume />} />
+
+          <Route path="/cara-pesan" element={<CaraPesan />} />
+        <Route path="/kalkulator-pakan" element={<KalkulatorPakan />} />
+
+
 
           {/* Not Found (harus di akhir) */}
           <Route path="*" element={<NotFound />} />
