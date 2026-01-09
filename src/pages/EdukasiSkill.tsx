@@ -7,27 +7,27 @@ const skillContent = [
     title: 'React & Vite Dasar',
     description: 'Cara setup project React cepat dengan Vite, struktur folder, dan komponen pertama.',
     type: 'video', // atau 'image'
-    url: '/videos/react-vite-intro.mp4', // Upload video ke public/videos/
+    url: '/videos/web.webm', // Upload video ke public/videos/
     thumbnail: '/images/react-thumbnail.jpg', // Opsional thumbnail untuk video
   },
   {
     title: 'Tailwind CSS Tips',
     description: 'Cara membuat dark mode, responsive grid, dan custom theme dengan Tailwind.',
-    type: 'image',
-    url: '/images/tailwind-example.png', // Upload gambar ke public/images/
+    type: 'video',
+    url: '/videos/darktaliwin.mp4', // Upload gambar ke public/images/
   },
   {
-    title: 'Framer Motion Animasi',
-    description: 'Contoh animasi hover, modal fade, dan page transition yang saya gunakan di website ini.',
+    title: 'Coding Android',
+    description: 'Belajar Coding di android.',
     type: 'video',
-    url: '/videos/framer-motion-demo.mp4',
+    url: '/videos/codingandroid.mp4',
     thumbnail: '/images/framer-thumbnail.jpg',
   },
   {
-  title: 'Judul Baru',
-  description: 'Deskripsi singkat.',
+  title: 'BI/BOSA',
+  description: 'Belom ada Project.',
   type: 'image', // atau 'video'
-  url: '/images/gambar-baru.jpg', // atau '/videos/video-baru.mp4'
+  url: '/images/card.jpg', // atau '/videos/video-baru.mp4'
   thumbnail: '/images/thumbnail.jpg' // Opsional untuk video
 },
   // Tambah konten baru di sini, contoh:

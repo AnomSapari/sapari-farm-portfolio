@@ -11,7 +11,7 @@ import { MediaBar } from './components/MediaBar';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
 import SkillPortfolio from './pages/SkillPortfolio';
-import Products from './pages/Products';  // ← Pakai dari pages (hapus import dari components kalau ada)
+import Products from './components/Products';  // ← Pakai dari pages (hapus import dari components kalau ada)
 import EdukasiSkill from './pages/EdukasiSkill';
 import EdukasiPeternakan from './pages/EdukasiPeternakan';
 import PerjalananPeternakan from './pages/PerjalananPeternakan'; // Asumsi nama file ini

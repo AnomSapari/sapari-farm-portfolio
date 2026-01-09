@@ -5,29 +5,29 @@ import { Link } from 'react-router-dom';
 const peternakanContent = [
   {
     title: 'Setup Kandang Ayam KUB',
-    description: 'Cara membuat kandang sederhana tapi fungsional untuk 50-100 ekor ayam.',
+    description: ' kandang sederhana tapi fungsional 20 ekor ayam.',
     type: 'image',
-    url: '/images/kandang-kub.jpg',
+    url: '/images/kandangbording.jpg',
   },
   {
     title: 'Pemberian Pakan Harian',
     description: 'Jadwal dan jenis pakan starter, grower, finisher untuk pertumbuhan optimal.',
     type: 'video',
-    url: '/videos/pakan-demo.mp4',
+    url: '/videos/kandang minimalis.mp4',
     thumbnail: '/images/pakan-thumbnail.jpg',
   },
   {
-    title: 'Vaksinasi DOC',
-    description: 'Tips vaksin ND dan IBD pada DOC agar ayam sehat dan minim kematian.',
+    title: 'Vaksinasi KUB',
+    description: 'Tips vaksin ND dan IBD pada KUB agar ayam sehat dan minim kematian.',
     type: 'image',
-    url: '/images/vaksin-doc.jpg',
+    url: '/images/KUB.jpeg',
   },
 
   {
-  title: 'Judul Baru',
-  description: 'Deskripsi singkat.',
-  type: 'image', // atau 'video'
-  url: '/images/gambar-baru.jpg', // atau '/videos/video-baru.mp4'
+  title: 'Cek perkembangan',
+  description: 'Perkembangan di usia 2 minggu.',
+  type: 'video', // atau 'image'
+  url: '/videos/perkembangan.mp4', // atau '/videos/video-baru.mp4'
   thumbnail: '/images/thumbnail.jpg' // Opsional untuk video
 },
   // Tambah konten baru di sini
@@ -47,7 +47,7 @@ export default function EdukasiPeternakan() {
             Edukasi Peternakan Ayam KUB
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-            Tips praktis dari pengalaman beternak ayam KUB, DOC, dan pengelolaan pakan.
+            Belajar beternak ayam KUB, DOC, dan pengelolaan pakan.
           </p>
         </div>
 

@@ -15,24 +15,66 @@ interface ProductItem {
 const products: ProductItem[] = [
   {
     id: 1,
-    name: 'Bibit Ayam KUB Unggul',
-    image: '/images/bibit-kub.jpg',
-    price: 'Rp 50.000 / ekor',
+    name: 'Ayam KUB usia 1 minggu',
+    image: '/images/Bibit Ayam KUB.jpg',
+    price: 'Rp 13.000 / ekor',
     description: 'Bibit ayam KUB berkualitas tinggi, sehat, pertumbuhan cepat. Vaksin lengkap.',
-    stock: 'Tersedia 500 ekor',
+    stock: 'Tersedia 100 ekor',
     waText: 'Halo, saya mau pesan Bibit Ayam KUB Unggul. Stok ada?',
     shopeeLink: 'https://shopee.co.id/product-link-bibit-kub', // Ganti dengan link asli kamu
   },
   {
+    id: 1,
+    name: 'Ayam KUB usia 4 minggu',
+    image: '/images/bibit-kub.jpg',
+    price: 'Rp 35.000 / ekor',
+    description: 'Ayam KUB berkualitas tinggi, sehat, pertumbuhan cepat. Vaksin lengkap.',
+    stock: 'Tersedia 50 ekor',
+    waText: 'Halo, saya mau pesan Bibit Ayam KUB Unggul. Stok ada?',
+    shopeeLink: 'https://shopee.co.id/product-link-bibit-kub',
+  },
+  {
     id: 2,
-    name: 'DOC Ayam Kampung',
-    image: '/images/doc-ayam.jpg',
-    price: 'Rp 8.000 / ekor',
-    description: 'Day Old Chick ayam kampung unggul, produksi telur tinggi.',
-    stock: 'Tersedia 1000 ekor',
+    name: 'Ayam Jago',
+    image: '/images/ayam.jpg',
+    price: 'Rp 350.000 / ekor',
+    description: 'Ayam jantan Dewasa.',
+    stock: 'Tersedia 10 ekor',
     waText: 'Halo, saya mau pesan DOC Ayam Kampung. Info stok dan pengiriman?',
     shopeeLink: 'https://shopee.co.id/product-link-doc-ayam',
   },
+  {
+  id: 5,
+  name: 'Vitamin Anti Stress',
+  image: '/images/vitaStress.webp',
+  price: 'Rp 5.000 / Sachet',
+  description: 'Vitamin tambahan untuk meningkatkan daya tahan ayam KUB terhadap penyakit.',
+  stock: 'Tersedia 300 Sachet',
+  waText: 'Halo, saya mau pesan DOC Ayam Kampung. Info stok dan pengiriman?',
+  shopeeLink: 'https://shopee.co.id/product-link-doc-ayam',
+  
+},
+{
+  id: 5,
+  name: 'Oxytic Laga',
+  image: '/images/oxytic-laga.jpg',
+  price: 'Rp 50.000 / Botol',
+  description: 'Efektif untuk mengobati luka dan infeksi bakteri serta mempercepat penyembuhan luka pada ayam laga.',
+  stock: 'Tersedia 30 Botol',
+  waText: 'Halo, saya mau pesan DOC Ayam Kampung. Info stok dan pengiriman?',
+  shopeeLink: 'https://shopee.co.id/product-link-doc-ayam',
+  
+},
+{
+  id: 5,
+  name: 'Feed-Supplement',
+  image: '/images/Mineral-Feed-Supplement-A.webp',
+  price: 'Rp 50.000 / Botol',
+  description: 'mengoptimalkan pertumbuhan pada ayam laga serta mencegah dan menyembuhkan penyakit karena kekurangan mineral seperti lumpuh, kaki bengkok, kurang darah, dan lainnya.',
+  stock: 'Tersedia 30 Botol',
+  waText: 'Halo, saya mau pesan DOC Ayam Kampung. Info stok dan pengiriman?',
+  shopeeLink: 'https://shopee.co.id/product-link-doc-ayam',
+},
   // Tambah produk lain di sini
 ];
 
@@ -48,10 +90,10 @@ export default function Products() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-green-700 dark:text-green-400">
-            Produk Seller Sapari Farm
+            Produk Sapari Farm
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 mt-4">
-            Bibit ayam KUB, DOC, pakan berkualitas – siap dikirim ke seluruh Indonesia
+            Bibit ayam KUB, DOC, pakan berkualitas ,Supplement – siap dikirim ke seluruh Indonesia
           </p>
         </div>
 

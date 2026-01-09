@@ -91,7 +91,8 @@ Saya ingin pesan pakan ayam KUB.
 
 
   return (
-   <div className="pt-24 md:pt-28 p-6 md:p-12 bg-gray-900 text-white min-h-screen">
+  <div className="p-6 md:p-12 bg-gray-900 text-white min-h-screen">
+
 
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 text-teal-400">
         Kalkulator Pakan Ayam KUB

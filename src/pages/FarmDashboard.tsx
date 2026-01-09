@@ -37,7 +37,8 @@ const FarmDashboard = () => {
   };
 
   return (
-    <section className="min-h-screen p-6 md:p-12 text-white bg-gradient-to-b from-gray-900 to-black">
+   <section className="min-h-screen pt-24 md:pt-28 px-6 md:px-12 pb-10 text-white bg-gradient-to-b from-gray-900 to-black">
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
