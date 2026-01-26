@@ -2,6 +2,33 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 // Data konten edukasi (kamu tinggal tambah di sini)
+type SkillItem = {
+  title: string;
+  description: string;
+  image: string;
+};
+
+const skills: SkillItem[] = [
+  {
+    title: 'Belajar Manajemen Pakan',
+    description:
+      'Mempelajari jenis pakan starter dan grower serta jadwal pemberian yang tepat.',
+    image: '/images/belajar-pakan.jpg',
+  },
+  {
+    title: 'Belajar Perawatan & Kesehatan',
+    description:
+      'Belajar mengenali ciri ayam sehat, vaksinasi, dan penanganan awal penyakit.',
+    image: '/images/belajar-kesehatan.jpg',
+  },
+  {
+    title: 'Belajar Manajemen Kandang',
+    description:
+      'Mengatur kebersihan kandang, sirkulasi udara, dan kepadatan ayam.',
+    image: '/images/belajar-kandang.jpg',
+  },
+];
+
 const skillContent = [
   {
     title: 'React & Vite Dasar',
@@ -107,6 +134,43 @@ export default function EdukasiSkill() {
           !
         </p>
       </div>
+      {/* HASIL BELAJAR & SKILL */}
+<div className="max-w-6xl mx-auto mt-20">
+  <div className="text-center mb-12 space-y-4">
+    <h2 className="text-3xl md:text-4xl font-bold text-green-700 dark:text-green-400">
+      Hasil Belajar & Pengembangan Skill
+    </h2>
+    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+      Berikut adalah dokumentasi proses belajar dan peningkatan kemampuan saya
+      dalam beternak ayam KUB.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {skills.map((skill, index) => (
+      <motion.div
+        key={skill.title}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.15 }}
+        viewport={{ once: true }}
+        className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden"
+      >
+        <img
+          src={skill.image}
+          alt={skill.title}
+          className="w-full h-56 object-cover"
+        />
+        <div className="p-6">
+          <h3 className="text-xl font-semibold mb-2">{skill.title}</h3>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">
+            {skill.description}
+          </p>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</div>
     </motion.section>
   );
 }

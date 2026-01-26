@@ -41,3 +41,27 @@
 .read-the-docs {
   color: #888;
 }
+
+.btn-farm {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #14b8a6;
+  color: #14b8a6;
+}
+.btn-farm.active {
+  background: #14b8a6;
+  color: black;
+}
+
+.nav-link {
+  @apply text-gray-600 hover:text-gray-900 transition;
+}
+
+.dropdown {
+  @apply absolute top-full mt-2 w-56 bg-white border rounded-lg shadow-lg flex flex-col p-2 z-50;
+}
+
+.dropdown a {
+  @apply px-3 py-2 rounded hover:bg-gray-100;
+}
+
