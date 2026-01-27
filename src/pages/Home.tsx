@@ -70,21 +70,23 @@ export const Home = () => {
       </motion.div>
 
       {/* RIGHT IMAGE */}
-      <motion.div
-        initial={wrapImg.initial}
-        animate={wrapImg.animated}
-        transition={wrapImg.transition}
-        className="flex flex-1 items-center justify-center bg-gradient-to-bl from-emerald-500 via-emerald-900 to-black overflow-hidden rounded-xl"
-      >
-        <motion.img
-          initial={image.initial}
-          animate={image.animated}
-          transition={image.transition}
-          src="images/KUB.jpeg"
-          alt="Peternakan Ayam"
-          className="object-cover w-full h-full"
-        />
-      </motion.div>
+<motion.div
+  initial={wrapImg.initial}
+  animate={wrapImg.animated}
+  transition={wrapImg.transition}
+   className="flex flex-1 items-center justify-center 
+  bg-gradient-to-bl from-emerald-500 via-emerald-900 to-black 
+  rounded-md"
+>
+  <motion.img
+    initial={image.initial}
+    animate={image.animated}
+    transition={image.transition}
+    src="/images/KUB.jpeg"
+    alt="Peternakan Ayam"
+     className="max-w-full max-h-full object-contain"
+  />
+</motion.div>
 
       {/* BADGE */}
       <LeaveCard label="Sapari Farm" />
