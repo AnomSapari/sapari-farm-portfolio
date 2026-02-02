@@ -2,20 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =====================
+   GLOBAL RESET / ROOT
+===================== */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1a1a1a;
+  background-color: #020617; /* gray-950 */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
 a {
@@ -29,7 +30,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -48,6 +48,9 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 button:hover {
   border-color: #646cff;
@@ -69,3 +72,126 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+/* =====================
+   NAVBAR STYLES
+===================== */
+.nav-link { 
+  position: relative;
+  display: inline-block; /* INI KUNCI */
+  padding: 0.25rem 0;
+  color: #d1d5db;
+  transition: color 0.3s ease;
+   @apply text-gray-300 hover:text-emerald-400 transition font-medium;
+
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background-color: #22c55e; /* green-500 */
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #22c55e;
+}   
+/* =====================
+   DROPDOWN
+===================== */
+
+.dropdown {
+  @apply absolute top-full left-0 mt-3 w-56
+    bg-gray-900 border border-white/10
+    rounded-xl shadow-xl
+    flex flex-col p-2
+    opacity-0 invisible
+    transition-all duration-200
+    z-50;
+}
+
+.group:hover .dropdown,
+.dropdown:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.dropdown {
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.group:hover .dropdown,
+.group:focus-within .dropdown {
+ opacity: 1;
+  scale: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+.group::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 12px;
+}
+
+/* =====================
+   ACTIVE SIDE BORDER
+===================== */
+.nav-brand {
+  position: relative;
+  padding: 0.25rem 0.75rem;
+}
+
+/* garis kiri */
+.nav-brand::before,
+/* garis kanan */
+.nav-brand::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #3b82f6; /* blue-500 */
+  transition: width 0.3s ease;
+}
+
+/* kiri mulai dari tengah */
+.nav-brand::before {
+  right: 50%;
+}
+
+/* kanan mulai dari tengah */
+.nav-brand::after {
+  left: 50%;
+}
+
+/* aktif */
+.nav-brand.active-side::before,
+.nav-brand.active-side::after {
+  width: 12px;
+}
+
+.nav-brand:hover::before,
+.nav-brand:hover::after {
+  width: 12px;
+}
+
+
