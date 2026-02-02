@@ -1,11 +1,8 @@
-
-
-
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconChevronDown } from '@tabler/icons-react';
-import { mainLinks, productMenu, educationMenu, contactLink } from '../menuData';
+import { mainLinks, productMenu, educationMenu, contactLink } from './menuData';
 
 export default function DesktopNav() {
   const [openProduct, setOpenProduct] = useState(false);
