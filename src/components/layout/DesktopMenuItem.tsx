@@ -1,12 +1,14 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { MenuItem } from "./menuData";
+import type { MenuItem } from "./menuData";
 
 export function DesktopMenuItem({ item }: { item: MenuItem }) {
   const location = useLocation();
 
   const isParentActive =
-    item.children?.some((sub) =>
-      location.pathname.startsWith(sub.to)
+    item.children?.some(
+      (sub) =>
+        location.pathname === sub.to ||
+        location.pathname.startsWith(`${sub.to}/`)
     );
 
   return (
@@ -21,16 +23,17 @@ export function DesktopMenuItem({ item }: { item: MenuItem }) {
           {item.label}
         </NavLink>
       ) : (
-        <span
-          className={`nav-link cursor-default ${
+        <button
+          type="button"
+          className={`nav-link bg-transparent border-0 cursor-default ${
             isParentActive ? "active" : ""
           }`}
         >
           {item.label}
-        </span>
+        </button>
       )}
 
-      {item.children && (
+      {item.children?.length ? (
         <div className="dropdown">
           {item.children.map((sub) => (
             <NavLink
@@ -46,7 +49,7 @@ export function DesktopMenuItem({ item }: { item: MenuItem }) {
             </NavLink>
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,54 +1,58 @@
+export type Role = "user" | "admin";
+
 export type SubMenu = {
   label: string;
   to: string;
+  roles?: Role[];
 };
 
 export type MenuItem = {
   label: string;
   to?: string;
   children?: SubMenu[];
+  roles?: Role[];
 };
 
 export const menuData: MenuItem[] = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+
   {
-    label: "Home",
-    to: "/",
-  },
-   {
-    label: 'About',
-    to: '/about',
-  },
-  {
-    label: 'Skills & Portfolio',
+    label: "Skills & Portfolio",
     children: [
-      { label: 'Skills', to: '/skills' },
-      { label: 'Portfolio', to: '/portfolio' },
-      { label: 'Skill + Portfolio', to: '/skill-portfolio' },
+      { label: "Skills", to: "/skills" },
+      { label: "Portfolio", to: "/portfolio" },
+      { label: "Skill + Portfolio", to: "/skill-portfolio" },
     ],
   },
+
   {
-    label: 'Learning',
+    label: "Learning",
     children: [
-      { label: 'Coding', to: '/learning/coding' },
-      { label: 'Resources', to: '/learning/resources' },
-      { label: 'Farming', to: '/learning/farming' },
+      { label: "Coding", to: "/learning/coding" },
+      { label: "Resources", to: "/learning/resources" },
+      { label: "Farming", to: "/learning/farming" },
       {
-        label: 'Kalkulator Pakan',
-        to: '/learning/farming/kalkulator',
+        label: "Kalkulator Pakan",
+        to: "/learning/farming/kalkulator",
+        roles: ["admin"], // 🔐 contoh role
       },
     ],
   },
-   {
-    label: 'Produk & Tools',
+
+  {
+    label: "Produk & Tools",
     children: [
-      { label: 'Produk', to: '/products' },
-      { label: 'Cara Pesan', to: '/cara-pesan' },
+      { label: "Produk", to: "/products" },
+      { label: "Cara Pesan", to: "/cara-pesan" },
     ],
   },
+
   {
-    label: 'Contact',
-    to: '/contact',
-  }, 
-  
-  
+    label: "Admin Panel",
+    to: "/admin",
+    roles: ["admin"],
+  },
+
+  { label: "Contact", to: "/contact" },
 ];
