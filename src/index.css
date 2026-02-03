@@ -18,6 +18,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+html,
+body {
+  overflow-x: hidden;
+}
 
 a {
   font-weight: 500;
