@@ -1,16 +1,24 @@
-import { JenisAyam } from '../../data/ayam'
+import { JenisAyam } from "../../data/ayam"
 
 type Props = {
   jenis: JenisAyam
   setJenis: (v: JenisAyam) => void
+
+  usia: number
+  setUsia: (v: number) => void
+
   jumlahAyam: number
   setJumlahAyam: (v: number) => void
+
   hargaPakan: number
   setHargaPakan: (v: number) => void
+
   hargaBibit: number
   setHargaBibit: (v: number) => void
+
   biayaOperasional: number
   setBiayaOperasional: (v: number) => void
+
   margin: number
   setMargin: (v: number) => void
 }
@@ -18,6 +26,8 @@ type Props = {
 export default function KalkulatorForm({
   jenis,
   setJenis,
+  usia,
+  setUsia,
   jumlahAyam,
   setJumlahAyam,
   hargaPakan,
@@ -31,6 +41,7 @@ export default function KalkulatorForm({
 }: Props) {
   return (
     <div className="space-y-3 bg-gray-900 p-4 rounded-xl">
+
       <select
         className="w-full p-2 bg-gray-800 rounded"
         value={jenis}
@@ -40,6 +51,15 @@ export default function KalkulatorForm({
         <option value="broiler">Broiler</option>
         <option value="petelur">Petelur</option>
       </select>
+
+      {/* USIA */}
+      <input
+        type="number"
+        placeholder="Usia ayam (minggu)"
+        className="w-full p-2 bg-gray-800 rounded"
+        value={usia}
+        onChange={(e) => setUsia(Number(e.target.value))}
+      />
 
       <input
         type="number"

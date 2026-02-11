@@ -23,9 +23,15 @@ export default function Navbar() {
             >
               {/* Menu utama */}
               {menu.to ? (
-                <NavLink to={menu.to} className="nav-link">
-                  {menu.label}
-                </NavLink>
+                <NavLink
+  to={menu.to}
+  end
+  className={({ isActive }) =>
+    `nav-link ${isActive ? "text-emerald-500" : ""}`
+  }
+>
+  {menu.label}
+</NavLink>
               ) : (
                 <button className="flex items-center gap-1 nav-link">
                   {menu.label}

@@ -1,4 +1,4 @@
-import { createWaLink } from '../utils/whatsapp';
+import { createWaLink } from './Learning/Farming/utils/whatsapp';
 
 
 const Contact = () => {

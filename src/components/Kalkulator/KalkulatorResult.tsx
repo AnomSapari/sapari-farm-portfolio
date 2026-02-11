@@ -1,24 +1,45 @@
-export default function KalkulatorResult({ hasil }: any) {
+type HasilKalkulator = {
+  usia: number
+  totalBibit: number
+  totalPakanKg: number
+  totalPakan: number
+  biayaOperasional: number
+  totalModal: number
+  bepPerEkor: number
+  hargaJualTotal: number
+  hargaJualPerEkor: number
+  margin: number
+}
+
+type Props = {
+  hasil: HasilKalkulator
+}
+
+export default function KalkulatorResult({ hasil }: Props) {
   return (
-    <div className="bg-gray-900 p-6 rounded-xl space-y-2">
-      <h2 className="text-xl font-bold text-teal-400">
-        Hasil Perhitungan Transparan
-      </h2>
+    <div className="bg-gray-900 p-4 rounded-xl space-y-2">
+      <p>Usia Ayam: <b>{hasil.usia} minggu</b></p>
+      <p>Total Pakan: <b>{hasil.totalPakanKg.toFixed(1)} kg</b></p>
+      <p>Biaya Pakan: Rp <b>{hasil.totalPakan.toLocaleString("id-ID")}</b></p>
+      <p>Biaya Bibit: Rp <b>{hasil.totalBibit.toLocaleString("id-ID")}</b></p>
+      <p>Biaya Operasional: Rp <b>{hasil.biayaOperasional.toLocaleString("id-ID")}</b></p>
 
-      <p>Total pakan: {hasil.totalPakan.toFixed(1)} kg</p>
-      <p>Biaya pakan: Rp {hasil.biayaPakan.toLocaleString()}</p>
-      <p>Biaya bibit: Rp {hasil.biayaBibit.toLocaleString()}</p>
-      <p>Total biaya: Rp {hasil.totalBiaya.toLocaleString()}</p>
+      <hr className="border-gray-700 my-2" />
 
-      <hr className="opacity-20" />
-
-      <p>Estimasi produksi: {hasil.estimasiProduksiKg} kg</p>
-      <p className="font-semibold">
-        Harga pokok/kg: Rp {hasil.hargaPokokPerKg.toFixed(0)}
+      <p className="text-yellow-400">
+        BEP / Ekor: Rp <b>{hasil.bepPerEkor.toLocaleString("id-ID")}</b>
       </p>
 
-      <p className="text-teal-400 font-bold">
-        Harga jual wajar: Rp {hasil.hargaJualDisarankan.toFixed(0)} / kg
+      <p>Total Modal: Rp <b>{hasil.totalModal.toLocaleString("id-ID")}</b></p>
+
+      <p className="text-green-400 text-lg">
+        Harga Jual Target (+{hasil.margin}%): Rp{" "}
+        <b>{hasil.hargaJualTotal.toLocaleString("id-ID")}</b>
+      </p>
+
+      <p className="text-green-300">
+        Harga / Ekor: Rp{" "}
+        <b>{hasil.hargaJualPerEkor.toLocaleString("id-ID")}</b>
       </p>
     </div>
   )

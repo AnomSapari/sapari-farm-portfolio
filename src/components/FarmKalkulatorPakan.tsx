@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { motion } from 'framer-motion';
-import { createWaLink } from '../utils/whatsapp';
+import { createWaLink } from '../pages/Learning/Farming/utils/whatsapp';
 
 const getPakanPerEkor = (umur: number): number => {
   if (umur <= 4) return 30;

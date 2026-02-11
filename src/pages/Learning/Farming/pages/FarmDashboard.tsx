@@ -1,0 +1,77 @@
+import { useEffect, useState } from "react";
+import FarmingSubNav from "../components/FarmingSubNav";
+import FarmChart from "../FarmChart";
+import { exportCSV } from "../utils/exportCsv";
+import type { JurnalPakan } from "../utils/farming";
+
+export default function FarmDashboard() {
+  const [list, setList] = useState<JurnalPakan[]>([]);
+
+  useEffect(() => {
+    const saved = JSON.parse(
+      localStorage.getItem("jurnalPakan") || "[]"
+    );
+    setList(saved);
+  }, []);
+
+  const totalAyam = list.reduce(
+    (sum, item) => sum + item.jumlah,
+    0
+  );
+
+  const totalPakan = list.reduce(
+    (sum, item) => sum + item.jumlah,
+    0
+  );
+
+  return (
+    <div className="space-y-6">
+      {/* Sub Navigation */}
+      <FarmingSubNav />
+
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold">Dashboard Farming</h1>
+        <p className="text-gray-400 text-sm">
+          Ringkasan aktivitas peternakan
+        </p>
+      </div>
+
+      {/* Statistik */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <StatCard label="Total Ayam" value={totalAyam} />
+        <StatCard label="Total Pakan (kg)" value={totalPakan} />
+        <StatCard label="Total Hari" value={list.length} />
+      </div>
+
+      {/* Grafik */}
+      {list.length > 0 && <FarmChart data={list} />}
+
+      {/* Action */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => exportCSV(list)}
+          className="bg-emerald-500 hover:bg-emerald-400
+          text-black px-4 py-2 rounded-lg font-medium"
+        >
+          Export CSV
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({
+  label,
+  value,
+}: {
+  label: string;
+  value: number;
+}) {
+  return (
+    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+      <p className="text-sm text-gray-400">{label}</p>
+      <p className="text-xl font-bold">{value}</p>
+    </div>
+  );
+}

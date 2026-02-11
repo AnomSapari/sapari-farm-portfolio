@@ -1,4 +1,4 @@
-import { createWaLink } from '../utils/whatsapp';
+import { createWaLink } from '../pages/Learning/Farming/utils/whatsapp';
 import { IconBrandWhatsapp } from '@tabler/icons-react';
 
 interface Props {

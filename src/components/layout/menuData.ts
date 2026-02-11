@@ -27,18 +27,16 @@ export const menuData: MenuItem[] = [
   },
 
   {
-    label: "Learning",
-    children: [
-      { label: "Coding", to: "/learning/coding" },
-      { label: "Resources", to: "/learning/resources" },
-      { label: "Farming", to: "/learning/farming" },
-      {
-        label: "Kalkulator Pakan",
-        to: "/learning/farming/kalkulator",
-        roles: ["admin"], // 🔐 contoh role
-      },
-    ],
-  },
+   label: 'Learning',
+  children: [
+    { label: 'Coding', to: '/learning/coding' },
+    { label: 'Resources', to: '/learning/resources' },
+    { label: 'Farming', to: '/learning/farming' },
+    { label: 'Jurnal Ternak', to: '/learning/farming/jurnal' },
+    { label: 'Perjalanan', to: '/learning/farming/perjalanan' },
+    { label: 'Kalkulator Pakan', to: '/learning/farming/kalkulator' },
+  ],
+},
 
   {
     label: "Produk & Tools",
