@@ -1,57 +1,108 @@
-import { useState } from "react";
-
-// components global
-import KalkulatorForm from "../../../../components/Kalkulator/KalkulatorForm";
-import KalkulatorResult from "../../../../components/Kalkulator/KalkulatorResult";
-
-// utils farming
-import { HitungInput, HasilKalkulator, kalkulasi } from "../utils/farming";
-
-// data
-import { JenisAyam } from "../../../../data/ayam";
+import { useMemo, useState } from "react";
+import { hitungKebutuhanPakan } from "@/utils/hitungPakan";
+import type { JenisAyam } from "@/data/ayam";
 
 export default function FarmKalkulator() {
-  const [jenis, setJenis] = useState<JenisAyam>("kub");
+  const [jenis, setJenis] = useState<JenisAyam>("KUB");
   const [jumlahAyam, setJumlahAyam] = useState(0);
-  const [usia, setUsia] = useState(1); // usia ayam
-  const [hargaPakan, setHargaPakan] = useState(12000);
-  const [hargaBibit, setHargaBibit] = useState(6000);
-  const [biayaOperasional, setBiayaOperasional] = useState(0);
-  const [margin, setMargin] = useState(15);
+  const [umurHari, setUmurHari] = useState(1);
 
-  const input: HitungInput = {
-    jenis,
-    jumlahAyam,
-    usia,
-    hargaPakan,
-    hargaBibit,
-    biayaOperasional,
-    margin,
-  };
+  const hasil = useMemo(
+    () =>
+      hitungKebutuhanPakan(jenis, jumlahAyam, umurHari),
+    [jenis, jumlahAyam, umurHari]
+  );
 
-  const hasil: HasilKalkulator | null =
-    jumlahAyam > 0 ? kalkulasi(input) : null;
-
+ 
   return (
     <div className="space-y-6">
-      <KalkulatorForm
-        jenis={jenis}
-        setJenis={setJenis}
-        jumlahAyam={jumlahAyam}
-        setJumlahAyam={setJumlahAyam}
-        usia={usia}
-        setUsia={setUsia}
-        hargaPakan={hargaPakan}
-        setHargaPakan={setHargaPakan}
-        hargaBibit={hargaBibit}
-        setHargaBibit={setHargaBibit}
-        biayaOperasional={biayaOperasional}
-        setBiayaOperasional={setBiayaOperasional}
-        margin={margin}
-        setMargin={setMargin}
-      />
+      <h1 className="text-2xl font-bold">Kalkulator Kebutuhan Pakan</h1>
 
-      {hasil && <KalkulatorResult hasil={hasil} />}
+      {/* TABLE INPUT */}
+      <div className="overflow-x-auto">
+        <table className="w-full border border-white/10 rounded-lg">
+          <thead className="bg-white/5">
+            <tr>
+              <th className="p-3 text-left">Parameter</th>
+              <th className="p-3 text-left">Input</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr className="border-t border-white/10">
+              <td className="p-3">Jenis Ayam</td>
+              <td className="p-3">
+                <select
+                  value={jenis}
+                  onChange={(e) =>
+                    setJenis(e.target.value as JenisAyam)
+                  }
+                  className="bg-gray-900 border border-white/10 rounded px-3 py-2"
+                >
+                  <option value="KUB">KUB</option>
+                  <option value="PETELUR">PETELUR</option>
+                  <option value="PELUNG">PELUNG</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr className="border-t border-white/10">
+              <td className="p-3">Jumlah Ayam (ekor)</td>
+              <td className="p-3">
+                <input
+                  type="number"
+                  value={jumlahAyam}
+                  onChange={(e) =>
+                    setJumlahAyam(Number(e.target.value))
+                  }
+                  className="bg-gray-900 border border-white/10 rounded px-3 py-2 w-full"
+                />
+              </td>
+            </tr>
+
+            <tr className="border-t border-white/10">
+              <td className="p-3">Umur Ayam (hari)</td>
+              <td className="p-3">
+                <input
+                  type="number"
+                  value={umurHari}
+                  onChange={(e) =>
+                    setUmurHari(Number(e.target.value))
+                  }
+                  className="bg-gray-900 border border-white/10 rounded px-3 py-2 w-full"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* HASIL */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <ResultCard
+          label="Kebutuhan Pakan / Hari"
+          value={`${hasil.perHari.toFixed(2)} kg`}
+        />
+        <ResultCard
+          label="Total Kebutuhan Pakan"
+          value={`${hasil.totalKg.toFixed(2)} kg`}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ResultCard({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+      <p className="text-sm text-gray-400">{label}</p>
+      <p className="text-xl font-bold">{value}</p>
     </div>
   );
 }

@@ -1,19 +1,12 @@
+export type ModeCatatan = "harian" | "mingguan";
+export type JenisAyam = "KUB" | "PELUNG";
+
 export type CatatanTernak = {
-  id: string
-  tanggal: string
-  mode: "harian" | "mingguan"
-  umurHari: number
-  jenisAyam: "KUB" | "PELUNG"
-  jumlahAyam: number
-  pakan: {
-    jenis: string
-    jumlahKg: number
-    harga: number
-  }
-  kesehatan: {
-    status: "sehat" | "sakit"
-    gejala?: string
-    tindakan?: string
-    biayaObat?: number
-  }
-}
+  id: string;
+  tanggal: string;
+  mode: ModeCatatan;
+  jenisAyam: JenisAyam;
+  jumlahAyam: number;
+  biaya: number;
+  catatan?: string; 
+};

@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import { useState } from "react";
 
 import Desktop from "./components/layout/Desktop";
@@ -23,7 +24,10 @@ import FarmPerjalanan from "./pages/Learning/Farming/pages/FarmPerjalanan";
 import FarmJurnal from "./pages/Learning/Farming/pages/FarmJurnal";
 import FarmKalkulator from "./pages/Learning/Farming/pages/FarmKalkulator";
 
-function App() {
+import CaraPesan from "@/pages/CaraPesan";
+import OrderPage from "@/pages/Order";
+
+export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -33,20 +37,25 @@ function App() {
 
       <section className="px-3 md:px-10 lg:px-20 pb-12 pt-24 min-h-screen">
         <Routes>
+          {/* MAIN */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/resume" element={<Resume />} />
-
           <Route path="/skills" element={<Skills />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skill-portfolio" element={<SkillPortfolio />} />
-
           <Route path="/contact" element={<Contact />} />
 
+          {/* CARA PESAN & ORDER */}
+          <Route path="/cara-pesan" element={<CaraPesan />} />
+          <Route path="/order" element={<OrderPage />} />
+
+          {/* LEARNING */}
           <Route path="/learning" element={<LearningLayout />}>
             <Route path="coding" element={<Coding />} />
             <Route path="resources" element={<Resources />} />
 
+            {/* FARMING */}
             <Route path="farming" element={<FarmingLayout />}>
               <Route index element={<FarmDashboard />} />
               <Route path="perjalanan" element={<FarmPerjalanan />} />
@@ -55,11 +64,10 @@ function App() {
             </Route>
           </Route>
 
+          {/* FALLBACK */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </section>
     </main>
   );
 }
-
-export default App;

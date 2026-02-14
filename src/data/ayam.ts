@@ -1,48 +1,30 @@
-export type JenisAyam =
-  | "kub"
-  | "broiler"
-  | "petelur"
-  | "pelung"
+export type JenisAyam = "KUB" | "PELUNG" | "PETELUR";
+
 
 export const AYAM_CONFIG: Record<
   JenisAyam,
   {
-    nama: string
-    lamaSiklus: number        // hari
-    konsumsiPakanPerHari: number // kg / ekor / hari
-    hargaJualPerKg: number
-    bobotPanen: number        // kg / ekor
+    konsumsiPakanPerHari: number;
+    lamaSiklus: number;
+    bobotPanen: number;
   }
 > = {
-  broiler: {
-    nama: "Broiler",
-    lamaSiklus: 35,
-    konsumsiPakanPerHari: 0.1,
-    hargaJualPerKg: 22000,
-    bobotPanen: 2,
+  KUB: {
+    konsumsiPakanPerHari: 0.1,   // 100 gr
+    lamaSiklus: 70,
+    bobotPanen: 1.2,
   },
 
-  petelur: {
-    nama: "Petelur",
-    lamaSiklus: 30,
-    konsumsiPakanPerHari: 0.11,
-    hargaJualPerKg: 26000,
+  PELUNG: {
+    konsumsiPakanPerHari: 0.12,  // 120 gr
+    lamaSiklus: 90,
     bobotPanen: 1.8,
   },
 
-  kub: {
-    nama: "Ayam KUB",
-    lamaSiklus: 60,
-    konsumsiPakanPerHari: 0.09,
-    hargaJualPerKg: 28000,
-    bobotPanen: 1.6,
+  PETELUR: {
+    konsumsiPakanPerHari: 0.12,  // 110–125 gr realistis
+    lamaSiklus: 365,             // siklus tahunan
+    bobotPanen: 1.6,             // opsional (boleh 0 kalau tidak panen daging)
   },
+};
 
-  pelung: {
-    nama: "Ayam Pelung",
-    lamaSiklus: 90,
-    konsumsiPakanPerHari: 0.1,
-    hargaJualPerKg: 35000,
-    bobotPanen: 2.5,
-  },
-}

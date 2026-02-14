@@ -21,7 +21,7 @@ export const mainMenu = [
     children: [
       { label: 'Skills', path: '/skills' },
       { label: 'Portfolio', path: '/portfolio' },
-      { label: 'Skill + Portfolio', path: '/skill-portfolio' },
+      { label: 'Jurnal & Administrasi', path: '/skill-portfolio' },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const mainMenu = [
     ],
   },
   {
-    label: 'Kontak',
+    label: 'Hubungi Kami',
     path: '/contact',
   },
 ];

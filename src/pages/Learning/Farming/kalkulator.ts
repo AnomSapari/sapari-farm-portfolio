@@ -1,8 +1,9 @@
-import { JenisAyam, AYAM_CONFIG } from '@/data/ayam'
+import { JenisAyam, AYAM_CONFIG } from "@/data/ayam"
 
 type Input = {
   jenis: JenisAyam
   jumlahAyam: number
+  totalPakanKg: number
   hargaPakan: number
   hargaBibit: number
   biayaOperasional: number
@@ -12,12 +13,7 @@ type Input = {
 export function hitungTransparansi(input: Input) {
   const config = AYAM_CONFIG[input.jenis]
 
-  const totalPakan =
-    config.konsumsiPakanPerHari *
-    config.lamaSiklus *
-    input.jumlahAyam
-
-  const biayaPakan = totalPakan * input.hargaPakan
+  const biayaPakan = input.totalPakanKg * input.hargaPakan
   const biayaBibit = input.jumlahAyam * input.hargaBibit
 
   const totalBiaya =
@@ -31,7 +27,6 @@ export function hitungTransparansi(input: Input) {
     hargaPokokPerKg * (1 + input.margin / 100)
 
   return {
-    totalPakan,
     biayaPakan,
     biayaBibit,
     totalBiaya,

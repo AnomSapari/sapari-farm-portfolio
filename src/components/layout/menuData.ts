@@ -18,7 +18,7 @@ export const menuData: MenuItem[] = [
   { label: "About", to: "/about" },
 
   {
-    label: "Skills & Portfolio",
+    label: "Showcase",
     children: [
       { label: "Skills", to: "/skills" },
       { label: "Portfolio", to: "/portfolio" },
@@ -39,7 +39,7 @@ export const menuData: MenuItem[] = [
 },
 
   {
-    label: "Produk & Tools",
+    label: "Products",
     children: [
       { label: "Produk", to: "/products" },
       { label: "Cara Pesan", to: "/cara-pesan" },
@@ -47,7 +47,7 @@ export const menuData: MenuItem[] = [
   },
 
   {
-    label: "Admin Panel",
+    label: "Admin",
     to: "/admin",
     roles: ["admin"],
   },
