@@ -15,7 +15,7 @@ const dailyFeedData = [
 
 const farmingTimeline = [
   {
-    day: "Hari 0",
+    day: "Hari 1",
     title: "Persiapan Kandang",
     description: "Pembuatan kandang dan persiapan peralatan dasar.",
   },

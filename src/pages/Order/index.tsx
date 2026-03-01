@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { createWaLink } from "@/pages/Learning/Farming/utils/whatsapp";
+import { createWaLink } from "@/utils/whatsapp";
+
 
 export default function OrderPage() {
   const [data, setData] = useState<any>(null);

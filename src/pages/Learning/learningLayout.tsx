@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 
-export default function FarmingLayout() {
+export default function LearningLayout() {
   return (
-    <div className="space-y-6">
+    <div>
       <Outlet />
     </div>
   );

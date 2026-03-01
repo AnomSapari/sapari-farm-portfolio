@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
 import { useState } from "react";
 
 import Desktop from "./components/layout/Desktop";
@@ -14,18 +13,19 @@ import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
 import { NotFound } from "./pages/NotFound";
 
-import LearningLayout from "./pages/Learning/LearningLayout";
+import LearningLayout from "./pages/Learning/learningLayout";
 import Coding from "./pages/Learning/coding";
 import Resources from "./pages/Learning/resources";
 
 import FarmingLayout from "./pages/Learning/Farming/FarmingLayout";
 import FarmDashboard from "./pages/Learning/Farming/pages/FarmDashboard";
-import FarmPerjalanan from "./pages/Learning/Farming/pages/FarmPerjalanan";
 import FarmJurnal from "./pages/Learning/Farming/pages/FarmJurnal";
+import FarmPakan from "./pages/Learning/Farming/pages/FarmPakan";
 import FarmKalkulator from "./pages/Learning/Farming/pages/FarmKalkulator";
+import PerjalananPeternakan from "./pages/Learning/Farming/pages/PerjalananPeternakan";
 
-import CaraPesan from "@/pages/CaraPesan";
-import OrderPage from "@/pages/Order";
+import CaraPesan from "./pages/CaraPesan";
+import OrderPage from "./pages/Order";
 
 export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -46,25 +46,29 @@ export default function App() {
           <Route path="/skill-portfolio" element={<SkillPortfolio />} />
           <Route path="/contact" element={<Contact />} />
 
-          {/* CARA PESAN & ORDER */}
+          {/* ORDER */}
           <Route path="/cara-pesan" element={<CaraPesan />} />
           <Route path="/order" element={<OrderPage />} />
 
           {/* LEARNING */}
           <Route path="/learning" element={<LearningLayout />}>
             <Route path="coding" element={<Coding />} />
+            
             <Route path="resources" element={<Resources />} />
 
             {/* FARMING */}
             <Route path="farming" element={<FarmingLayout />}>
               <Route index element={<FarmDashboard />} />
-              <Route path="perjalanan" element={<FarmPerjalanan />} />
+              <Route path="perjalanan" element={<PerjalananPeternakan />} />
               <Route path="jurnal" element={<FarmJurnal />} />
+
+              <Route path="jurnal-pakan" element={<FarmPakan />} />
+              
               <Route path="kalkulator" element={<FarmKalkulator />} />
             </Route>
           </Route>
 
-          {/* FALLBACK */}
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </section>
