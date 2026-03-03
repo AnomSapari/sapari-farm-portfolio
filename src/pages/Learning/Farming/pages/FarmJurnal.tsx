@@ -1,13 +1,13 @@
+"use client";
+
 import { useState, useEffect, useMemo } from "react";
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 interface Journal {
@@ -15,266 +15,315 @@ interface Journal {
   date: string;
   type: string;
   feed: number;
+  price: number;
   mortality: number;
+  weight: number;
   note: string;
 }
 
-export default function FarmJurnal() {
-  // ================= STATE =================
-  const [journals, setJournals] = useState<Journal[]>(() => {
-    const saved = localStorage.getItem("farmJournals");
-    return saved ? JSON.parse(saved) : [];
-  });
+export default function FarmJournal() {
+  const [journals, setJournals] = useState<Journal[]>([]);
 
-  const today = new Date().toISOString().split("T")[0];
-
-  const [date, setDate] = useState<string>(today);
-  const [type, setType] = useState<string>("KUB");
+  const [date, setDate] = useState("");
+  const [type, setType] = useState("starter");
   const [feed, setFeed] = useState<number>(0);
+  const [price, setPrice] = useState<number>(12000);
   const [mortality, setMortality] = useState<number>(0);
-  const [note, setNote] = useState<string>("");
+  const [weight, setWeight] = useState<number>(0);
+  const [note, setNote] = useState("");
 
-  const [editId, setEditId] = useState<number | null>(null);
+  const [population] = useState<number>(100);
 
-  // ================= SAVE TO LOCAL STORAGE =================
   useEffect(() => {
-    localStorage.setItem("farmJournals", JSON.stringify(journals));
+    const data = localStorage.getItem("farm-journal");
+    if (data) setJournals(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("farm-journal", JSON.stringify(journals));
   }, [journals]);
 
-  // ================= RESET FORM =================
-  const resetForm = () => {
-    setDate(today);
-    setType("KUB");
-    setFeed(0);
-    setMortality(0);
-    setNote("");
-    setEditId(null);
-  };
-
-  // ================= SUBMIT =================
-  const handleSubmit = () => {
-    if (!date) return;
-
-    if (editId !== null) {
-      // UPDATE
-      setJournals((prev) =>
-        prev.map((j) =>
-          j.id === editId ? { id: editId, date, type, feed, mortality, note } : j
-        )
-      );
-    } else {
-      // ADD
-      const newJournal: Journal = {
-        id: Date.now(),
-        date,
-        type,
-        feed,
-        mortality,
-        note,
-      };
-
-      setJournals((prev) => [...prev, newJournal]);
+  const addJournal = () => {
+    if (!date) {
+      alert("Pilih tanggal terlebih dahulu");
+      return;
     }
 
-    resetForm();
+    const newData: Journal = {
+      id: Date.now(),
+      date,
+      type,
+      feed,
+      price,
+      mortality,
+      weight,
+      note,
+    };
+
+    setJournals([...journals, newData]);
+
+    setFeed(0);
+    setMortality(0);
+    setWeight(0);
+    setNote("");
   };
 
-  // ================= EDIT =================
-  const handleEdit = (journal: Journal) => {
-    setEditId(journal.id);
-    setDate(journal.date);
-    setType(journal.type);
-    setFeed(journal.feed);
-    setMortality(journal.mortality);
-    setNote(journal.note);
+  const deleteData = (id: number) => {
+    if (!confirm("Hapus data ini?")) return;
+    setJournals(journals.filter((j) => j.id !== id));
   };
 
-  // ================= DELETE =================
-  const handleDelete = (id: number) => {
-    if (!confirm("Yakin ingin menghapus data?")) return;
-    setJournals((prev) => prev.filter((j) => j.id !== id));
-  };
-
-  // ================= STATISTICS =================
   const stats = useMemo(() => {
-    const totalFeed = journals.reduce((sum, j) => sum + j.feed, 0);
-    const totalMortality = journals.reduce((sum, j) => sum + j.mortality, 0);
+    const totalFeed = journals.reduce((a, b) => a + b.feed, 0);
 
-    return { totalFeed, totalMortality };
-  }, [journals]);
+    const totalCost = journals.reduce((a, b) => a + b.feed * b.price, 0);
 
-  // ================= CHART DATA =================
-  const chartData = useMemo(() => {
-    const types = ["KUB", "Petelur", "Pelung"];
+    const totalMortality = journals.reduce((a, b) => a + b.mortality, 0);
 
-    return types.map((t) => {
-      const filtered = journals.filter((j) => j.type === t);
+    const alive = population - totalMortality;
 
-      return {
-        name: t,
-        pakan: filtered.reduce((sum, j) => sum + j.feed, 0),
-        mati: filtered.reduce((sum, j) => sum + j.mortality, 0),
-      };
-    });
-  }, [journals]);
+    const avgWeight =
+      journals.length > 0 ? journals[journals.length - 1].weight : 0;
 
-  // ================= RETURN UI =================
+    const totalWeight = alive * avgWeight;
+
+    const fcr = totalWeight > 0 ? totalFeed / totalWeight : 0;
+
+    const costPerChicken = alive > 0 ? totalCost / alive : 0;
+
+    return {
+      totalFeed,
+      totalCost,
+      totalMortality,
+      alive,
+      costPerChicken,
+      avgWeight,
+      fcr,
+    };
+  }, [journals, population]);
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      {/* HEADER */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">
-          🐔 Farm Monitoring Dashboard
-        </h1>
-        <p className="text-gray-500">
-          Sistem Monitoring Pakan & Kematian Ayam
-        </p>
+    <div className="p-6 md:p-10 space-y-8 bg-black min-h-screen text-white">
+
+      <h1 className="text-3xl font-bold">
+        🐔 Farm Journal Dashboard
+      </h1>
+
+      {/* STAT CARD */}
+
+      <div className="grid md:grid-cols-5 gap-4">
+
+        <Stat title="Total Pakan" value={`${stats.totalFeed} kg`} />
+
+        <Stat
+          title="Total Biaya"
+          value={`Rp ${stats.totalCost.toLocaleString()}`}
+        />
+
+        <Stat title="Ayam Hidup" value={stats.alive} />
+
+        <Stat
+          title="Biaya / Ekor"
+          value={`Rp ${Math.round(stats.costPerChicken).toLocaleString()}`}
+        />
+
+        <Stat title="FCR" value={stats.fcr.toFixed(2)} />
+
       </div>
 
-      {/* STATISTICS CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Total Data</p>
-          <h2 className="text-3xl font-bold">{journals.length}</h2>
-        </div>
+      {/* FORM */}
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Total Pakan</p>
-          <h2 className="text-3xl font-bold text-green-600">
-            {stats.totalFeed} kg
-          </h2>
-        </div>
+      <div className="bg-zinc-900 p-6 rounded-xl space-y-4">
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Total Kematian</p>
-          <h2 className="text-3xl font-bold text-red-600">
-            {stats.totalMortality} ekor
-          </h2>
-        </div>
-      </div>
+        <h2 className="text-xl font-bold">
+          Input Data Harian
+        </h2>
 
-      {/* GRAFIK */}
-      <div className="bg-white p-6 rounded-2xl shadow mb-8">
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="pakan" fill="#16a34a" />
-            <Bar dataKey="mati" fill="#dc2626" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+        <div className="grid md:grid-cols-3 gap-4">
 
-      {/* FORM & TABLE */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* FORM */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h2 className="text-lg font-semibold mb-4">
-            {editId !== null ? "Edit Jurnal" : "Tambah Jurnal"}
-          </h2>
-
-          <div className="space-y-3">
+          <Input label="Tanggal">
             <input
               type="date"
+              className="input"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full p-2 border rounded"
             />
+          </Input>
 
+          <Input label="Jenis Pakan">
             <select
+              className="input"
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="w-full p-2 border rounded"
             >
-              <option value="KUB">KUB</option>
-              <option value="Petelur">Petelur</option>
-              <option value="Pelung">Pelung</option>
+              <option>starter</option>
+              <option>grower</option>
+              <option>finisher</option>
             </select>
+          </Input>
 
+          <Input label="Pakan (kg)">
             <input
               type="number"
+              className="input"
               value={feed}
               onChange={(e) => setFeed(Number(e.target.value))}
-              className="w-full p-2 border rounded"
-              placeholder="Pakan (kg)"
             />
+          </Input>
 
+          <Input label="Harga / kg">
             <input
               type="number"
+              className="input"
+              value={price}
+              onChange={(e) => setPrice(Number(e.target.value))}
+            />
+          </Input>
+
+          <Input label="Ayam Mati">
+            <input
+              type="number"
+              className="input"
               value={mortality}
               onChange={(e) => setMortality(Number(e.target.value))}
-              className="w-full p-2 border rounded"
-              placeholder="Mati (ekor)"
             />
+          </Input>
 
+          <Input label="Berat rata-rata (kg)">
             <input
-              type="text"
+              type="number"
+              className="input"
+              value={weight}
+              onChange={(e) => setWeight(Number(e.target.value))}
+            />
+          </Input>
+
+          <Input label="Catatan">
+            <input
+              className="input"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="w-full p-2 border rounded"
-              placeholder="Catatan"
             />
+          </Input>
 
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-green-600 text-white py-2 rounded"
-            >
-              {editId !== null ? "Update Data" : "Simpan Data"}
-            </button>
-
-            {editId !== null && (
-              <button
-                onClick={resetForm}
-                className="w-full bg-gray-500 text-white py-2 rounded"
-              >
-                Batal Edit
-              </button>
-            )}
-          </div>
         </div>
 
-        {/* TABLE */}
-        <div className="bg-white p-6 rounded-2xl shadow lg:col-span-2 overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-2">Tanggal</th>
-                <th className="p-2">Jenis</th>
-                <th className="p-2">Pakan</th>
-                <th className="p-2">Mati</th>
-                <th className="p-2">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {journals.map((item) => (
-                <tr key={item.id} className="border-b text-center">
-                  <td className="p-2">{item.date}</td>
-                  <td className="p-2">{item.type}</td>
-                  <td className="p-2">{item.feed}</td>
-                  <td className="p-2">{item.mortality}</td>
-                  <td className="p-2 space-x-2">
-                    <button
-                      onClick={() => handleEdit(item)}
-                      className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="bg-red-600 text-white px-2 py-1 rounded text-xs"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <button
+          onClick={addJournal}
+          className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-semibold"
+        >
+          Simpan Data
+        </button>
+
       </div>
+
+      {/* CHART */}
+
+      <div className="bg-zinc-900 p-6 rounded-xl">
+
+        <h2 className="font-bold mb-4">
+          Grafik Konsumsi Pakan
+        </h2>
+
+        <div className="w-full h-[300px]">
+
+          <ResponsiveContainer>
+            <LineChart data={journals}>
+              <XAxis dataKey="date" stroke="#888" />
+              <YAxis stroke="#888" />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="feed"
+                stroke="#22c55e"
+                strokeWidth={3}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+
+        </div>
+
+      </div>
+
+      {/* TABLE */}
+
+      <div className="bg-zinc-900 p-6 rounded-xl overflow-auto">
+
+        <h2 className="font-bold mb-4">
+          Riwayat Jurnal
+        </h2>
+
+        <table className="w-full text-sm">
+
+          <thead className="text-zinc-400">
+            <tr>
+              <th>Tanggal</th>
+              <th>Pakan</th>
+              <th>Harga</th>
+              <th>Berat</th>
+              <th>Mati</th>
+              <th>Biaya</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {journals.map((j) => (
+
+              <tr key={j.id} className="border-t border-zinc-800">
+
+                <td>{j.date}</td>
+
+                <td>{j.feed} kg</td>
+
+                <td>Rp {j.price.toLocaleString()}</td>
+
+                <td>{j.weight} kg</td>
+
+                <td>{j.mortality}</td>
+
+                <td className="text-blue-400">
+                  Rp {(j.feed * j.price).toLocaleString()}
+                </td>
+
+                <td>
+                  <button
+                    onClick={() => deleteData(j.id)}
+                    className="text-red-400 hover:text-red-600"
+                  >
+                    Hapus
+                  </button>
+                </td>
+
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  );
+}
+
+function Stat({ title, value }: any) {
+  return (
+    <div className="bg-zinc-900 p-5 rounded-xl">
+      <p className="text-zinc-400">{title}</p>
+      <h2 className="text-2xl font-bold">{value}</h2>
+    </div>
+  );
+}
+
+function Input({ label, children }: any) {
+  return (
+    <div>
+      <label className="text-sm text-zinc-400">{label}</label>
+      {children}
     </div>
   );
 }

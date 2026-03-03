@@ -1,72 +1,99 @@
-import { useEffect, useState } from "react";
-import FarmingSubNav from "../components/FarmingSubNav";
-import FarmChart from "../FarmChart";
-import { exportCSV } from "@/utils/exportCsv";
-import type { JurnalPakan } from "@/types/jurnal";
+import { useMemo, useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
+
+interface Journal {
+  id: number;
+  date: string;
+  feed: number;
+  mortality: number;
+}
 
 export default function FarmDashboard() {
-  const [list, setList] = useState<JurnalPakan[]>([]);
+  const [journals] = useState<Journal[]>(() => {
+    const saved = localStorage.getItem("farmJournals");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  useEffect(() => {
-    const saved = localStorage.getItem("jurnalPakan");
-    if (saved) {
-      setList(JSON.parse(saved) as JurnalPakan[]);
-    }
-  }, []);
+  const pricePerKg = 12000;
 
-  const totalAyam = list.reduce(
-    (sum, item) => sum + item.jumlahAyam,
-    0
-  );
+  const stats = useMemo(() => {
+    const totalFeed = journals.reduce((sum, j) => sum + j.feed, 0);
+    const totalMortality = journals.reduce((sum, j) => sum + j.mortality, 0);
 
-  const totalPakan = list.reduce(
-    (sum, item) => sum + item.pakanKg,
-    0
-  );
+    const totalCost = totalFeed * pricePerKg;
+
+    return {
+      totalFeed,
+      totalMortality,
+      totalCost,
+      totalData: journals.length,
+    };
+  }, [journals]);
+
+  const chartData = journals.map((j) => ({
+    date: j.date,
+    pakan: j.feed,
+  }));
 
   return (
     <div className="space-y-6">
-      <FarmingSubNav />
 
-      <div>
-        <h1 className="text-2xl font-bold">Dashboard Farming</h1>
-        <p className="text-gray-400 text-sm">
-          Ringkasan aktivitas peternakan
-        </p>
+      {/* STAT CARD */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div className="bg-gray-900 p-5 rounded-xl border border-white/10">
+          <p className="text-gray-400 text-sm">Total Data</p>
+          <h2 className="text-2xl font-bold">{stats.totalData}</h2>
+        </div>
+
+        <div className="bg-gray-900 p-5 rounded-xl border border-white/10">
+          <p className="text-gray-400 text-sm">Total Pakan</p>
+          <h2 className="text-2xl font-bold text-green-400">
+            {stats.totalFeed} kg
+          </h2>
+        </div>
+
+        <div className="bg-gray-900 p-5 rounded-xl border border-white/10">
+          <p className="text-gray-400 text-sm">Ayam Mati</p>
+          <h2 className="text-2xl font-bold text-red-400">
+            {stats.totalMortality}
+          </h2>
+        </div>
+
+        <div className="bg-gray-900 p-5 rounded-xl border border-white/10">
+          <p className="text-gray-400 text-sm">Biaya Pakan</p>
+          <h2 className="text-2xl font-bold text-yellow-400">
+            Rp {stats.totalCost.toLocaleString()}
+          </h2>
+        </div>
+
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        <StatCard label="Total Ayam" value={totalAyam} />
-        <StatCard label="Total Pakan (kg)" value={totalPakan} />
-        <StatCard label="Total Hari" value={list.length} />
+      {/* GRAFIK */}
+      <div className="bg-gray-900 p-6 rounded-xl border border-white/10">
+        <h2 className="text-lg font-semibold mb-4">
+          Grafik Konsumsi Pakan
+        </h2>
+
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+            <XAxis dataKey="date" stroke="#aaa" />
+            <YAxis stroke="#aaa" />
+            <Tooltip />
+            <Bar dataKey="pakan" fill="#10b981" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
-      {list.length > 0 && <FarmChart data={list} />}
-
-      <div className="flex justify-end">
-        <button
-          onClick={() => exportCSV(list)}
-          className="bg-emerald-500 hover:bg-emerald-400
-          text-black px-4 py-2 rounded-lg font-medium"
-        >
-          Export CSV
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function StatCard({
-  label,
-  value,
-}: {
-  label: string;
-  value: number;
-}) {
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-      <p className="text-sm text-gray-400">{label}</p>
-      <p className="text-xl font-bold">{value}</p>
     </div>
   );
 }
